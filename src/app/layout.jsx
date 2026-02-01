@@ -20,7 +20,6 @@ export const metadata = {
   keywords: ["notes", "markdown", "knowledge base", "second brain", "productivity"],
   authors: [{ name: "Second Brain" }],
   manifest: "/manifest.json",
-  themeColor: "#a855f7",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -45,7 +44,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="apple-touch-icon" href="/brain-logo.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         {/* KaTeX CSS for math equations */}

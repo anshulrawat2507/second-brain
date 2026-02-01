@@ -237,8 +237,8 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: data.body || 'New notification from Second Brain',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/badge-72x72.png',
+    icon: '/brain-logo.png',
+    badge: '/brain-logo.png',
     vibrate: [100, 50, 100],
     data: {
       url: data.url || '/dashboard'
