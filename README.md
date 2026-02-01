@@ -136,27 +136,15 @@ cd second-brain
 npm install
 ```
 
-### 3. Set up Supabase
+### 3. Set up environment
 
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to the SQL Editor and run the schema from `supabase/schema.sql`
-3. Get your project URL and anon key from Settings > API
-
-### 4. Configure environment variables
-
-Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+Copy the environment file (Supabase credentials are pre-configured):
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
-```
-
-### 5. Run the development server
+### 4. Run the development server
 
 ```bash
 npm run dev
