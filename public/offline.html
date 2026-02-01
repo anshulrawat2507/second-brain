@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Second Brain</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      text-align: center;
+      max-width: 400px;
+    }
+    
+    .icon {
+      font-size: 80px;
+      margin-bottom: 24px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    
+    h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: #a855f7;
+    }
+    
+    p {
+      font-size: 16px;
+      color: #a0a0a0;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #a855f7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      background: #9333ea;
+      transform: translateY(-2px);
+    }
+    
+    .cached-notes {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cached-notes h2 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #a855f7;
+    }
+    
+    .cached-notes p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    
+    .logo span {
+      font-size: 24px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <span>🧠 Second Brain</span>
+    </div>
+    
+    <div class="icon">📡</div>
+    
+    <h1>You're Offline</h1>
+    
+    <p>It looks like you've lost your internet connection. Don't worry - your cached notes are still available!</p>
+    
+    <button class="btn" onclick="location.reload()">
+      <span>🔄</span>
+      Try Again
+    </button>
+    
+    <div class="cached-notes">
+      <h2>💡 Tip</h2>
+      <p>Second Brain caches your notes locally. You can still view and edit previously loaded notes while offline. Changes will sync automatically when you're back online.</p>
+    </div>
+  </div>
+  
+  <script>
+    // Check if we're back online
+    window.addEventListener('online', () => {
+      location.reload();
+    });
+    
+    // Retry connection every 5 seconds
+    setInterval(() => {
+      if (navigator.onLine) {
+        location.reload();
+      }
+    }, 5000);
+  </script>
+</body>
+</html>

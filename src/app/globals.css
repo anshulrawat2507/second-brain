@@ -1,26 +1,949 @@
 @import "tailwindcss";
 
+/* ============================================
+   Second Brain - Clean Minimalist Design
+   Only 2 Themes: Purple Noir & Clean Light
+   ============================================ */
+
+/* Base Typography */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ==========================================
+   THEME: Purple Noir (Dark) - Default
+   ========================================== */
+:root,
+[data-theme="purple-noir"] {
+  /* Backgrounds */
+  --color-bg-primary: #0d0d0f;
+  --color-bg-secondary: #121214;
+  --color-bg-tertiary: #1a1a1e;
+  --color-bg-elevated: #1f1f24;
+  --color-bg-hover: #252529;
+  
+  /* Text */
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: #a0a0a8;
+  --color-text-tertiary: #6b6b73;
+  --color-text-muted: #4a4a52;
+  
+  /* Purple Accent */
+  --color-accent: #8b5cf6;
+  --color-accent-hover: #a78bfa;
+  --color-accent-muted: rgba(139, 92, 246, 0.15);
+  --color-accent-subtle: rgba(139, 92, 246, 0.08);
+  
+  /* Borders */
+  --color-border: #2a2a2f;
+  --color-border-light: #3a3a42;
+  --color-divider: #1f1f24;
+  
+  /* Status */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+  
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Logo */
+  --logo-display-dark: block;
+  --logo-display-light: none;
+  
+  /* Graph Colors */
+  --graph-node: #6b6b73;
+  --graph-node-hover: #8b5cf6;
+  --graph-edge: #3a3a42;
+  --graph-label: #a0a0a8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ==========================================
+   THEME: Clean Light
+   ========================================== */
+[data-theme="clean-light"] {
+  /* Backgrounds */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f8fa;
+  --color-bg-tertiary: #f0f0f3;
+  --color-bg-elevated: #ffffff;
+  --color-bg-hover: #e8e8eb;
+  
+  /* Text */
+  --color-text-primary: #111113;
+  --color-text-secondary: #5c5c66;
+  --color-text-tertiary: #8c8c96;
+  --color-text-muted: #afafb8;
+  
+  /* Accent - Teal to match logo */
+  --color-accent: #0d9488;
+  --color-accent-hover: #14b8a6;
+  --color-accent-muted: rgba(13, 148, 136, 0.12);
+  --color-accent-subtle: rgba(13, 148, 136, 0.06);
+  
+  /* Borders */
+  --color-border: #e4e4e8;
+  --color-border-light: #d4d4d9;
+  --color-divider: #f0f0f3;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+  
+  /* Logo */
+  --logo-display-dark: none;
+  --logo-display-light: block;
+  
+  /* Graph Colors */
+  --graph-node: #8c8c96;
+  --graph-node-hover: #0d9488;
+  --graph-edge: #d4d4d9;
+  --graph-label: #5c5c66;
+}
+
+/* ==========================================
+   Base Styles
+   ========================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* ==========================================
+   Scrollbar
+   ========================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-light);
+}
+
+/* ==========================================
+   Selection
+   ========================================== */
+::selection {
+  background: var(--color-accent-muted);
+  color: var(--color-text-primary);
+}
+
+/* ==========================================
+   Focus States
+   ========================================== */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   Links
+   ========================================== */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ==========================================
+   Typography
+   ========================================== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.875rem; }
+
+p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================
+   Form Elements
+   ========================================== */
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ==========================================
+   Buttons
+   ========================================== */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+/* Primary Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--color-accent);
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-light);
+}
+
+/* Ghost Button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+/* ==========================================
+   Cards
+   ========================================== */
+.card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--color-border-light);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================
+   Inputs
+   ========================================== */
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+.input:hover {
+  border-color: var(--color-border-light);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-muted);
+}
+
+/* ==========================================
+   Badges
+   ========================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.badge-accent {
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+}
+
+/* ==========================================
+   Dividers
+   ========================================== */
+.divider {
+  height: 1px;
+  background: var(--color-divider);
+  margin: 16px 0;
+}
+
+/* ==========================================
+   Section Headers (for Sidebar)
+   ========================================== */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  margin-top: 8px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+}
+
+/* ==========================================
+   Keyboard Shortcuts
+   ========================================== */
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text-tertiary);
+}
+
+/* ==========================================
+   Tooltips
+   ========================================== */
+.tooltip {
+  position: absolute;
+  z-index: 1000;
+  padding: 8px 12px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 13px;
+  color: var(--color-text-primary);
+  pointer-events: none;
+  animation: fadeIn 0.15s ease;
+}
+
+/* ==========================================
+   Animations
+   ========================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0; 
+    transform: translateX(-8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+.animate-fadeIn { animation: fadeIn 0.2s ease; }
+.animate-slideUp { animation: slideUp 0.2s ease; }
+.animate-slide-up { animation: slideUp 0.3s ease; }
+.animate-slideIn { animation: slideIn 0.2s ease; }
+.animate-scaleIn { animation: scaleIn 0.2s ease; }
+
+/* ==========================================
+   Prose (Markdown Content)
+   ========================================== */
+.prose {
+  color: var(--color-text-primary);
+  line-height: 1.75;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose p {
+  margin-bottom: 1em;
+  color: var(--color-text-primary);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 2px 6px;
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+  color: var(--color-accent);
+}
+
+.prose pre {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  color: var(--color-text-primary);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 16px;
+  margin: 16px 0;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.prose ul, .prose ol {
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.prose li {
+  margin: 6px 0;
+}
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose hr {
+  border: none;
+  height: 1px;
+  background: var(--color-divider);
+  margin: 24px 0;
+}
+
+/* ==========================================
+   Graph View Styles
+   ========================================== */
+.graph-container {
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg-primary);
+}
+
+.graph-node {
+  fill: var(--graph-node);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.graph-node:hover {
+  fill: var(--graph-node-hover);
+  transform: scale(1.2);
+}
+
+.graph-edge {
+  stroke: var(--graph-edge);
+  stroke-width: 1px;
+}
+
+.graph-label {
+  fill: var(--graph-label);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  pointer-events: none;
+}
+
+/* ==========================================
+   Wiki Links
+   ========================================== */
+.wiki-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--color-accent);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wiki-link:hover {
+  color: var(--color-accent-hover);
+  border-bottom-color: var(--color-accent-hover);
+  background: var(--color-accent-subtle);
+  padding: 1px 4px;
+  margin: -1px -4px;
+  border-radius: 4px;
+}
+
+.wiki-link-broken {
+  color: var(--color-error);
+  border-bottom-style: dotted;
+  border-bottom-color: var(--color-error);
+  opacity: 0.7;
+}
+
+.wiki-link-broken:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-error);
+}
+
+/* ==========================================
+   Loading Skeleton
+   ========================================== */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-tertiary) 25%,
+    var(--color-bg-hover) 50%,
+    var(--color-bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ==========================================
+   Modal Backdrop
+   ========================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  animation: scaleIn 0.2s ease;
+}
+
+/* ==========================================
+   Empty States
+   ========================================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  color: var(--color-text-muted);
+}
+
+.empty-state-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-state-description {
+  font-size: 14px;
+  color: var(--color-text-tertiary);
+  max-width: 320px;
+}
+
+/* ==========================================
+   Legacy Variable Support
+   ========================================== */
+:root {
+  --bg-primary: var(--color-bg-primary);
+  --bg-secondary: var(--color-bg-secondary);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --accent: var(--color-accent);
+  --border: var(--color-border);
+  --highlight: var(--color-accent-hover);
+  --error: var(--color-error);
+  --success: var(--color-success);
+  --editor-bg: var(--color-bg-primary);
+  --editor-text: var(--color-text-primary);
+  --editor-cursor: var(--color-accent);
+  --scrollbar-bg: var(--color-bg-primary);
+  --scrollbar-thumb: var(--color-border);
+  --scrollbar-thumb-hover: var(--color-border-light);
+}
+
+/* ==========================================
+   Code Block Syntax Highlighting
+   ========================================== */
+.code-block-wrapper {
+  font-family: var(--font-jetbrains), 'Fira Code', 'Consolas', monospace;
+}
+
+.code-block-wrapper pre {
+  background: transparent;
+  margin: 0;
+}
+
+.code-block-wrapper code {
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Syntax highlighting colors */
+.code-keyword {
+  color: #c792ea;
+  font-weight: 500;
+}
+
+.code-string {
+  color: #c3e88d;
+}
+
+.code-comment {
+  color: #546e7a;
+  font-style: italic;
+}
+
+.code-number {
+  color: #f78c6c;
+}
+
+.code-function {
+  color: #82aaff;
+}
+
+.code-type {
+  color: #ffcb6b;
+}
+
+.code-tag {
+  color: #f07178;
+}
+
+.code-attribute {
+  color: #ffcb6b;
+}
+
+.code-property {
+  color: #80cbc4;
+}
+
+.code-key {
+  color: #89ddff;
+}
+
+.code-boolean {
+  color: #ff5370;
+}
+
+.code-variable {
+  color: #f07178;
+}
+
+/* Light theme adjustments */
+[data-theme="clean-light"] .code-keyword {
+  color: #7c3aed;
+}
+
+[data-theme="clean-light"] .code-string {
+  color: #059669;
+}
+
+[data-theme="clean-light"] .code-comment {
+  color: #9ca3af;
+}
+
+[data-theme="clean-light"] .code-number {
+  color: #ea580c;
+}
+
+[data-theme="clean-light"] .code-function {
+  color: #2563eb;
+}
+
+[data-theme="clean-light"] .code-type {
+  color: #d97706;
+}
+
+[data-theme="clean-light"] .code-tag {
+  color: #dc2626;
+}
+
+[data-theme="clean-light"] .code-attribute {
+  color: #d97706;
+}
+
+[data-theme="clean-light"] .code-property {
+  color: #0d9488;
+}
+
+[data-theme="clean-light"] .code-key {
+  color: #0284c7;
+}
+
+[data-theme="clean-light"] .code-boolean {
+  color: #dc2626;
+}
+
+[data-theme="clean-light"] .code-variable {
+  color: #dc2626;
+}
+
+/* Code Block Container Styles (for MarkdownPreview) */
+.markdown-content .code-block-wrapper {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-jetbrains), 'Fira Code', 'Consolas', monospace;
+}
+
+.markdown-content .code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.markdown-content .code-language {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  font-family: var(--font-jetbrains), monospace;
+}
+
+.markdown-content .copy-code-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.markdown-content .copy-code-btn:hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.markdown-content .code-block-wrapper pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  background: transparent;
+}
+
+.markdown-content .code-block-wrapper code {
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.markdown-content .code-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown-content .code-line:hover {
+  background: var(--color-bg-primary);
+  opacity: 0.5;
+}
+
+.markdown-content .line-number {
+  user-select: none;
+  text-align: right;
+  padding-right: 1rem;
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+  font-size: 0.75rem;
+  width: 2.5rem;
+  vertical-align: top;
+}
+
+.markdown-content .line-content {
+  white-space: pre;
+}
+
+/* ==========================================
+   Math Equations (KaTeX)
+   ========================================== */
+.math-block {
+  display: block;
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+}
+
+.math-inline {
+  display: inline;
+  padding: 0 0.25rem;
+}
+
+/* KaTeX color adjustments for dark theme */
+.katex {
+  color: var(--color-text-primary);
+}
+
+.katex .mord, .katex .mop, .katex .mbin, .katex .mrel {
+  color: inherit;
+}
+
+/* Table styles for Markdown */
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.markdown-content table:not(.code-table) th,
+.markdown-content table:not(.code-table) td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.markdown-content table:not(.code-table) th {
+  background: var(--color-bg-secondary);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.markdown-content table:not(.code-table) td {
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+}
+
+.markdown-content table:not(.code-table) tr:hover td {
+  background: var(--color-bg-secondary);
 }
