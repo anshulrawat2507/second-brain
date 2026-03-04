@@ -81,15 +81,17 @@ export function WikiLinkAutocomplete({
 
   const dropdown = (
     <div
-      className="fixed z-50 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/50 rounded-xl shadow-xl overflow-hidden min-w-[250px] max-w-[400px] max-h-[300px] overflow-y-auto"
+      className="fixed z-50 backdrop-blur-xl rounded-xl shadow-xl overflow-hidden min-w-[250px] max-w-[400px] max-h-[300px] overflow-y-auto"
       style={{
         top: position.top,
-        left: position.left
+        left: position.left,
+        backgroundColor: 'var(--color-bg-elevated)',
+        border: '1px solid var(--color-border)'
       }}
       ref={listRef}
     >
       {filteredNotes.length === 0 && !searchText && (
-        <div className="px-4 py-3 text-sm text-zinc-500">
+        <div className="px-4 py-3 text-sm" style={{ color: 'var(--color-text-muted)' }}>
           Type to search notes...
         </div>
       )}
@@ -98,11 +100,11 @@ export function WikiLinkAutocomplete({
         <button
           key={note.id}
           onClick={() => onSelect(note, headerSearch)}
-          className={`w-full px-4 py-2.5 text-left flex items-center gap-3 transition-colors ${
-            index === selectedIndex
-              ? 'bg-purple-500/20 text-zinc-100'
-              : 'text-zinc-400 hover:bg-zinc-800'
-          }`}
+          className={`w-full px-4 py-2.5 text-left flex items-center gap-3 transition-colors`}
+          style={index === selectedIndex
+            ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-text-primary)' }
+            : { color: 'var(--color-text-muted)' }
+          }
         >
           <span className="text-lg">
             {note.is_favorite ? '⭐' : '📝'}
@@ -110,7 +112,7 @@ export function WikiLinkAutocomplete({
           <div className="flex-1 min-w-0">
             <div className="font-medium truncate">{note.title}</div>
             {note.folder_name && (
-              <div className="text-xs text-zinc-500 truncate">
+              <div className="text-xs truncate" style={{ color: 'var(--color-text-muted)' }}>
                 📁 {note.folder_name}
               </div>
             )}
@@ -122,16 +124,16 @@ export function WikiLinkAutocomplete({
       {searchText && (
         <button
           onClick={() => onCreate(searchText)}
-          className={`w-full px-4 py-2.5 text-left flex items-center gap-3 border-t border-zinc-700/50 transition-colors ${
-            selectedIndex === filteredNotes.length
-              ? 'bg-purple-500/20 text-zinc-100'
-              : 'text-zinc-400 hover:bg-zinc-800'
-          }`}
+          className={`w-full px-4 py-2.5 text-left flex items-center gap-3 transition-colors`}
+          style={selectedIndex === filteredNotes.length
+            ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-text-primary)', borderTop: '1px solid var(--color-border)' }
+            : { color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-border)' }
+          }
         >
           <span className="text-lg">➕</span>
           <div className="flex-1 min-w-0">
             <div className="font-medium">Create &quot;{searchText}&quot;</div>
-            <div className="text-xs text-zinc-500">
+            <div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
               Create a new note with this title
             </div>
           </div>

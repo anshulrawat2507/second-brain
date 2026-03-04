@@ -124,15 +124,14 @@ export function MarkdownEditor({
         autoFocus
         className={cn(
           "w-full h-full min-h-[400px] p-6",
-          "bg-transparent text-zinc-100",
+          "bg-transparent",
           "font-mono text-base leading-relaxed",
           "border-none outline-none resize-none",
-          "placeholder:text-zinc-500",
-          "selection:bg-purple-500/30",
           className
         )}
         style={{ 
-          caretColor: '#a855f7',
+          color: 'var(--color-text-primary)',
+          caretColor: 'var(--color-accent)',
         }}
         onKeyDown={(e) => {
           // Only intercept Ctrl+S

@@ -43,7 +43,11 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
   return (
     <form 
       onSubmit={handleSubmit}
-      className="p-4 bg-zinc-900/80 backdrop-blur-xl rounded-xl border border-zinc-700/50 space-y-4"
+      className="p-4 backdrop-blur-xl rounded-xl border space-y-4"
+      style={{ 
+        backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 80%, transparent)',
+        borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)'
+      }}
     >
       {/* Task Input */}
       <div>
@@ -52,7 +56,13 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           placeholder="What needs to be done?"
-          className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+          className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all"
+          style={{ 
+            backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+            borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+            color: 'var(--color-text-primary)',
+            '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+          }}
           autoFocus
         />
       </div>
@@ -65,10 +75,24 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
             type="button"
             onClick={() => setPriority(p.value)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 ${
-              priority === p.value
-                ? `${p.color} text-white shadow-lg`
-                : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200'
+              priority === p.value ? `${p.color} text-white shadow-lg` : ''
             }`}
+            style={priority !== p.value ? { 
+              backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+              color: 'var(--color-text-secondary)'
+            } : {}}
+            onMouseEnter={(e) => {
+              if (priority !== p.value) {
+                e.currentTarget.style.backgroundColor = 'color-mix(in srgb, var(--color-bg-elevated) 50%, transparent)';
+                e.currentTarget.style.color = 'var(--color-text-primary)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (priority !== p.value) {
+                e.currentTarget.style.backgroundColor = 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)';
+                e.currentTarget.style.color = 'var(--color-text-secondary)';
+              }
+            }}
           >
             <span>{p.icon}</span>
             <span>{p.label}</span>
@@ -79,19 +103,28 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
       {/* Due Date */}
       <div className="flex items-center gap-4">
         <div className="flex-1">
-          <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Due Date</label>
+          <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Due Date</label>
           <input
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
+            style={{ 
+              backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+              borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+              color: 'var(--color-text-primary)',
+              '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+            }}
           />
         </div>
         
         <button
           type="button"
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className="mt-6 text-sm text-purple-400 hover:text-purple-300 transition-colors"
+          className="mt-6 text-sm transition-colors"
+          style={{ color: 'var(--color-accent-muted)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-accent)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-accent-muted)'; }}
         >
           {showAdvanced ? 'Less options' : 'More options'}
         </button>
@@ -99,14 +132,20 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
 
       {/* Advanced Options */}
       {showAdvanced && (
-        <div className="space-y-4 pt-4 border-t border-zinc-700/50">
+        <div className="space-y-4 pt-4 border-t" style={{ borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)' }}>
           {/* Recurring */}
           <div>
-            <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Repeat</label>
+            <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Repeat</label>
             <select
               value={recurring}
               onChange={(e) => setRecurring(e.target.value)}
-              className="w-full px-3 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+                borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+                color: 'var(--color-text-primary)',
+                '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+              }}
             >
               {RECURRING_OPTIONS.map(opt => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -116,13 +155,19 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
 
           {/* Tags */}
           <div>
-            <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Tags (comma-separated)</label>
+            <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Tags (comma-separated)</label>
             <input
               type="text"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="work, important, project"
-              className="w-full px-3 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
+              style={{ 
+                backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+                borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+                color: 'var(--color-text-primary)',
+                '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+              }}
             />
           </div>
         </div>
@@ -133,14 +178,21 @@ export function TodoForm({ todo, onSubmit, onCancel }) {
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-zinc-400 hover:text-zinc-200 transition-colors"
+          className="px-4 py-2 transition-colors"
+          style={{ color: 'var(--color-text-secondary)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-secondary)'; }}
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={!task.trim()}
-          className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-lg hover:from-purple-500 hover:to-violet-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-500/20"
+          className="px-4 py-2 text-white rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{ 
+            backgroundColor: 'var(--color-accent)',
+            boxShadow: '0 10px 15px -3px color-mix(in srgb, var(--color-accent) 20%, transparent)'
+          }}
         >
           {todo ? 'Update' : 'Add Todo'}
         </button>

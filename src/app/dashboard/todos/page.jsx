@@ -35,7 +35,7 @@ export default function TodosPage() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950 relative overflow-hidden">
+    <div className="h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       {/* Three.js animated background */}
       <DashboardBackground />
       
@@ -44,19 +44,20 @@ export default function TodosPage() {
         <Header />
         
         {/* Page header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-700/50 bg-zinc-900/60 backdrop-blur-xl">
+        <div className="flex items-center justify-between px-6 py-4 backdrop-blur-xl" style={{ borderBottom: '1px solid var(--color-border)', backgroundColor: 'color-mix(in srgb, var(--color-bg-primary) 60%, transparent)' }}>
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push('/dashboard')}
-              className="p-2 hover:bg-zinc-800/50 rounded-lg transition-all text-zinc-400 hover:text-purple-400"
+              className="p-2 rounded-lg transition-all"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               ← Back
             </button>
             <div className="flex items-center gap-3">
               <div className="text-2xl">✓</div>
               <div>
-                <h1 className="text-xl font-bold text-zinc-100">Todo List</h1>
-                <p className="text-sm text-zinc-400">Manage your tasks and stay organized</p>
+                <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Todo List</h1>
+                <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Manage your tasks and stay organized</p>
               </div>
             </div>
           </div>

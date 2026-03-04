@@ -181,10 +181,10 @@ export function CodeBlock({ code, language = 'plaintext', showLineNumbers = true
   const highlightedCode = highlightCode(code, normalizedLanguage);
 
   return (
-    <div className="code-block-wrapper group relative rounded-lg overflow-hidden my-4 bg-zinc-900 border border-zinc-700/50">
+    <div className="code-block-wrapper group relative rounded-lg overflow-hidden my-4" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-zinc-800 border-b border-zinc-700/50">
-        <span className="text-xs text-zinc-400 font-mono uppercase">
+      <div className="flex items-center justify-between px-4 py-2" style={{ backgroundColor: 'var(--color-bg-elevated)', borderBottom: '1px solid var(--color-border)' }}>
+        <span className="text-xs font-mono uppercase" style={{ color: 'var(--color-text-muted)' }}>
           {normalizedLanguage}
         </span>
         <button
@@ -193,8 +193,9 @@ export function CodeBlock({ code, language = 'plaintext', showLineNumbers = true
             "flex items-center gap-1.5 px-2 py-1 rounded text-xs transition-all",
             copied 
               ? "bg-green-500/20 text-green-400" 
-              : "hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200"
+              : ""
           )}
+          style={!copied ? { color: 'var(--color-text-muted)' } : {}}
         >
           {copied ? (
             <>
@@ -223,8 +224,8 @@ export function CodeBlock({ code, language = 'plaintext', showLineNumbers = true
               <table className="w-full border-collapse">
                 <tbody>
                   {lines.map((line, index) => (
-                    <tr key={index} className="hover:bg-zinc-800/30">
-                      <td className="select-none pr-4 text-right text-zinc-500/50 text-xs w-10 align-top">
+                    <tr key={index}>
+                      <td className="select-none pr-4 text-right text-xs w-10 align-top" style={{ color: 'var(--color-text-muted)', opacity: 0.5 }}>
                         {index + 1}
                       </td>
                       <td 

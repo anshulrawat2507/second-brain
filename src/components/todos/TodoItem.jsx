@@ -20,7 +20,7 @@ function getDueDateStatus(dueDate) {
   if (diffDays < 0) return { status: 'overdue', label: 'Overdue', color: 'text-red-500 bg-red-500/20' };
   if (diffDays === 0) return { status: 'today', label: 'Today', color: 'text-orange-500 bg-orange-500/20' };
   if (diffDays <= 3) return { status: 'soon', label: `${diffDays}d`, color: 'text-yellow-500 bg-yellow-500/20' };
-  return { status: 'normal', label: formatDate(due), color: 'text-zinc-400 bg-zinc-800' };
+  return { status: 'normal', label: formatDate(due), color: '', style: { color: 'var(--color-text-secondary)', backgroundColor: 'var(--color-bg-secondary)' } };
 }
 
 function formatDate(date) {
@@ -58,17 +58,23 @@ export function TodoItem({
   }
 
   return (
-    <div className={`group ${isSubtask ? '' : 'bg-zinc-900/50 rounded-xl border border-zinc-700/50 overflow-hidden hover:border-zinc-600/50 transition-all'}`}>
+    <div 
+      className={`group ${isSubtask ? '' : 'rounded-xl border overflow-hidden transition-all'}`}
+      style={isSubtask ? {} : { 
+        backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+        borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)'
+      }}
+    >
       {/* Main Todo Row */}
       <div className={`flex items-start gap-3 p-4 ${todo.completed ? 'opacity-60' : ''}`}>
         {/* Checkbox */}
         <button
           onClick={() => onToggle(todo.id, !todo.completed)}
-          className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-            todo.completed
-              ? 'bg-gradient-to-r from-purple-600 to-violet-600 border-purple-600 text-white'
-              : 'border-zinc-600 hover:border-purple-500'
-          }`}
+          className="mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all"
+          style={todo.completed
+            ? { backgroundColor: 'var(--color-accent)', borderColor: 'var(--color-accent)', color: 'white' }
+            : { borderColor: 'var(--color-border)' }
+          }
         >
           {todo.completed && <span className="text-xs">✓</span>}
         </button>
@@ -76,7 +82,10 @@ export function TodoItem({
         {/* Content */}
         <div className="flex-1 min-w-0">
           {/* Task text */}
-          <p className={`text-zinc-200 ${todo.completed ? 'line-through text-zinc-500' : ''}`}>
+          <p 
+            className={todo.completed ? 'line-through' : ''}
+            style={{ color: todo.completed ? 'var(--color-text-muted)' : 'var(--color-text-primary)' }}
+          >
             {todo.task}
           </p>
 
@@ -89,21 +98,33 @@ export function TodoItem({
 
             {/* Due date */}
             {dueDateStatus && (
-              <span className={`text-xs px-2 py-0.5 rounded-full ${dueDateStatus.color}`}>
+              <span 
+                className={`text-xs px-2 py-0.5 rounded-full ${dueDateStatus.color}`}
+                style={dueDateStatus.style}
+              >
                 📅 {dueDateStatus.label}
               </span>
             )}
 
             {/* Recurring */}
             {todo.recurring !== 'none' && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
+              <span 
+                className="text-xs px-2 py-0.5 rounded-full"
+                style={{ 
+                  backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)',
+                  color: 'var(--color-accent-muted)'
+                }}
+              >
                 🔄 {todo.recurring}
               </span>
             )}
 
             {/* Subtask count */}
             {hasSubtasks && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+              <span 
+                className="text-xs px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}
+              >
                 📋 {completedSubtasks}/{todo.subtasks.length}
               </span>
             )}
@@ -112,7 +133,11 @@ export function TodoItem({
             {todo.tags && todo.tags.map(tag => (
               <span 
                 key={tag} 
-                className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400"
+                className="text-xs px-2 py-0.5 rounded-full"
+                style={{ 
+                  backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)',
+                  color: 'var(--color-accent-muted)'
+                }}
               >
                 #{tag}
               </span>
@@ -126,14 +151,20 @@ export function TodoItem({
             <>
               <button
                 onClick={() => setExpanded(!expanded)}
-                className="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+                className="p-1.5 rounded-lg transition-all"
+                style={{ color: 'var(--color-text-muted)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                 title={expanded ? 'Collapse' : 'Expand'}
               >
                 {expanded ? '▼' : '▶'}
               </button>
               <button
                 onClick={() => setShowSubtaskForm(true)}
-                className="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+                className="p-1.5 rounded-lg transition-all"
+                style={{ color: 'var(--color-text-muted)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                 title="Add subtask"
               >
                 +
@@ -142,7 +173,10 @@ export function TodoItem({
           )}
           <button
             onClick={onEdit}
-            className="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+            className="p-1.5 rounded-lg transition-all"
+            style={{ color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
             title="Edit"
           >
             ✏️
@@ -150,7 +184,10 @@ export function TodoItem({
           {!isSubtask && (
             <button
               onClick={() => onArchive(todo.id)}
-              className="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+              className="p-1.5 rounded-lg transition-all"
+              style={{ color: 'var(--color-text-muted)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
               title="Archive"
             >
               📦
@@ -158,7 +195,10 @@ export function TodoItem({
           )}
           <button
             onClick={() => onDelete(todo.id)}
-            className="p-1.5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+            className="p-1.5 rounded-lg transition-all"
+            style={{ color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#f87171'; e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
             title="Delete"
           >
             🗑️
@@ -168,10 +208,20 @@ export function TodoItem({
 
       {/* Subtasks */}
       {!isSubtask && expanded && (hasSubtasks || showSubtaskForm) && (
-        <div className="border-t border-zinc-700/30 bg-zinc-800/30">
+        <div 
+          className="border-t"
+          style={{ 
+            borderColor: 'color-mix(in srgb, var(--color-border) 30%, transparent)',
+            backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 30%, transparent)'
+          }}
+        >
           {/* Subtask list */}
           {todo.subtasks?.map(subtask => (
-            <div key={subtask.id} className="pl-8 border-b border-zinc-700/20 last:border-b-0">
+            <div 
+              key={subtask.id} 
+              className="pl-8 border-b last:border-b-0"
+              style={{ borderColor: 'color-mix(in srgb, var(--color-border) 20%, transparent)' }}
+            >
               <TodoItem
                 todo={subtask}
                 onToggle={onToggle}
@@ -222,20 +272,30 @@ function SubtaskInput({ onSubmit, onCancel }) {
         value={task}
         onChange={(e) => setTask(e.target.value)}
         placeholder="Add subtask..."
-        className="flex-1 px-3 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-sm"
+        className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 text-sm"
+        style={{ 
+          backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+          borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+          color: 'var(--color-text-primary)',
+          '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+        }}
         autoFocus
       />
       <button
         type="submit"
         disabled={!task.trim()}
-        className="px-3 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-lg hover:from-purple-500 hover:to-violet-500 text-sm disabled:opacity-50"
+        className="px-3 py-2 text-white rounded-lg text-sm disabled:opacity-50"
+        style={{ backgroundColor: 'var(--color-accent)' }}
       >
         Add
       </button>
       <button
         type="button"
         onClick={onCancel}
-        className="px-3 py-2 text-zinc-400 hover:text-zinc-200 text-sm"
+        className="px-3 py-2 text-sm"
+        style={{ color: 'var(--color-text-secondary)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-secondary)'; }}
       >
         Cancel
       </button>

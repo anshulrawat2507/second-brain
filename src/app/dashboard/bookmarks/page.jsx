@@ -116,7 +116,7 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
   if (isGrid) {
     return (
       <div 
-        className={`group relative bg-gradient-to-br ${config.bg} backdrop-blur-sm border ${config.border} rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1`}
+        className={`group relative bg-gradient-to-br ${config.bg} backdrop-blur-sm border ${config.border} rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
       >
         {/* Thumbnail / Preview */}
         <div 
@@ -139,21 +139,21 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
               )}
             </>
           ) : (
-            <div className="w-full h-full bg-zinc-800/50 flex items-center justify-center">
-              <div className="text-zinc-600 opacity-50">
+            <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
+              <div className="opacity-50" style={{ color: 'var(--color-text-muted)' }}>
                 {config.icon}
               </div>
             </div>
           )}
           
           {/* Platform Badge */}
-          <div className={`absolute top-3 left-3 p-2 rounded-xl bg-zinc-900/80 backdrop-blur-sm ${config.accent}`}>
+          <div className={`absolute top-3 left-3 p-2 rounded-xl backdrop-blur-sm ${config.accent}`} style={{ backgroundColor: 'color-mix(in srgb, var(--color-bg-primary) 80%, transparent)' }}>
             {config.icon}
           </div>
 
           {/* Favorite Badge */}
           {bookmark.is_favorite && (
-            <div className="absolute top-3 right-3 p-2 rounded-xl bg-zinc-900/80 backdrop-blur-sm text-yellow-400">
+            <div className="absolute top-3 right-3 p-2 rounded-xl backdrop-blur-sm text-yellow-400" style={{ backgroundColor: 'color-mix(in srgb, var(--color-bg-primary) 80%, transparent)' }}>
               {Icons.starFilled}
             </div>
           )}
@@ -162,19 +162,20 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
         {/* Content */}
         <div className="p-4 space-y-2">
           <h3 
-            className="font-semibold text-zinc-100 line-clamp-2 cursor-pointer hover:text-purple-300 transition-colors leading-snug"
+            className="font-semibold line-clamp-2 cursor-pointer transition-colors leading-snug"
+            style={{ color: 'var(--color-text-primary)' }}
             onClick={() => onOpen(bookmark)}
           >
             {bookmark.title || 'Untitled'}
           </h3>
           
-          <p className="text-xs text-zinc-500 flex items-center gap-1.5">
+          <p className="text-xs flex items-center gap-1.5" style={{ color: 'var(--color-text-tertiary)' }}>
             {config.icon}
             <span className="truncate">{hostname}</span>
           </p>
 
           {bookmark.description && (
-            <p className="text-sm text-zinc-400 line-clamp-2 leading-relaxed">
+            <p className="text-sm line-clamp-2 leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
               {bookmark.description}
             </p>
           )}
@@ -182,12 +183,12 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
           {/* Tags */}
           <div className="flex flex-wrap gap-1.5 pt-1">
             {bookmark.category && (
-              <span className="px-2 py-0.5 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/20">
+              <span className="px-2 py-0.5 text-xs rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent)', border: '1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)' }}>
                 {bookmark.category}
               </span>
             )}
             {bookmark.tags?.slice(0, 2).map(tag => (
-              <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-zinc-800/50 text-zinc-400">
+              <span key={tag} className="px-2 py-0.5 text-xs rounded-full" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}>
                 #{tag}
               </span>
             ))}
@@ -195,25 +196,28 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
         </div>
 
         {/* Actions - Hover overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-zinc-900/95 via-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+        <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0" style={{ background: 'linear-gradient(to top, color-mix(in srgb, var(--color-bg-primary) 95%, transparent), color-mix(in srgb, var(--color-bg-primary) 80%, transparent), transparent)' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <button
                 onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(bookmark); }}
-                className={`p-2 rounded-lg transition-colors ${bookmark.is_favorite ? 'text-yellow-400 bg-yellow-500/10' : 'text-zinc-400 hover:text-yellow-400 hover:bg-zinc-800'}`}
+                className={`p-2 rounded-lg transition-colors ${bookmark.is_favorite ? 'text-yellow-400 bg-yellow-500/10' : 'hover:text-yellow-400'}`}
+                style={!bookmark.is_favorite ? { color: 'var(--color-text-secondary)' } : undefined}
               >
                 {bookmark.is_favorite ? Icons.starFilled : Icons.star}
               </button>
               <button
                 onClick={copyUrl}
-                className="p-2 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                className="p-2 rounded-lg transition-colors"
+                style={{ color: 'var(--color-text-secondary)' }}
               >
                 {copied ? Icons.check : Icons.copy}
               </button>
             </div>
             <button
               onClick={(e) => { e.stopPropagation(); onDelete?.(bookmark.id); }}
-              className="p-2 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+              className="p-2 rounded-lg hover:text-red-400 hover:bg-red-500/10 transition-colors"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               {Icons.trash}
             </button>
@@ -226,17 +230,18 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
   // List view
   return (
     <div 
-      className={`group flex items-center gap-4 p-4 bg-gradient-to-r ${config.bg} backdrop-blur-sm border ${config.border} rounded-xl hover:border-purple-500/40 transition-all duration-200`}
+      className={`group flex items-center gap-4 p-4 bg-gradient-to-r ${config.bg} backdrop-blur-sm border ${config.border} rounded-xl transition-all duration-200`}
     >
       {/* Thumbnail */}
       <div 
-        className="relative w-24 h-16 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 bg-zinc-800"
+        className="relative w-24 h-16 rounded-lg overflow-hidden cursor-pointer flex-shrink-0"
+        style={{ backgroundColor: 'var(--color-bg-secondary)' }}
         onClick={() => onOpen(bookmark)}
       >
         {thumbnail ? (
           <img src={thumbnail} alt="" className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-zinc-600">
+          <div className="w-full h-full flex items-center justify-center" style={{ color: 'var(--color-text-muted)' }}>
             {config.icon}
           </div>
         )}
@@ -245,23 +250,24 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
       {/* Content */}
       <div className="flex-1 min-w-0">
         <h3 
-          className="font-medium text-zinc-100 truncate cursor-pointer hover:text-purple-300 transition-colors"
+          className="font-medium truncate cursor-pointer transition-colors"
+          style={{ color: 'var(--color-text-primary)' }}
           onClick={() => onOpen(bookmark)}
         >
           {bookmark.title || 'Untitled'}
         </h3>
-        <p className="text-xs text-zinc-500 flex items-center gap-1 mt-0.5">
+        <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
           {config.icon}
           <span className="truncate">{hostname}</span>
         </p>
         <div className="flex items-center gap-2 mt-1.5">
           {bookmark.category && (
-            <span className="px-2 py-0.5 text-xs rounded-full bg-purple-500/20 text-purple-300">
+            <span className="px-2 py-0.5 text-xs rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent)' }}>
               {bookmark.category}
             </span>
           )}
           {bookmark.click_count > 0 && (
-            <span className="text-xs text-zinc-500">👁 {bookmark.click_count}</span>
+            <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>👁 {bookmark.click_count}</span>
           )}
         </div>
       </div>
@@ -270,22 +276,25 @@ function BookmarkCard({ bookmark, onOpen, onDelete, onToggleFavorite, isGrid = t
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(bookmark); }}
-          className={`p-2 rounded-lg transition-colors ${bookmark.is_favorite ? 'text-yellow-400' : 'text-zinc-500 hover:text-yellow-400'}`}
+          className={`p-2 rounded-lg transition-colors ${bookmark.is_favorite ? 'text-yellow-400' : 'hover:text-yellow-400'}`}
+          style={!bookmark.is_favorite ? { color: 'var(--color-text-tertiary)' } : undefined}
         >
           {bookmark.is_favorite ? Icons.starFilled : Icons.star}
         </button>
-        <button onClick={copyUrl} className="p-2 text-zinc-500 hover:text-zinc-200 rounded-lg transition-colors">
+        <button onClick={copyUrl} className="p-2 rounded-lg transition-colors" style={{ color: 'var(--color-text-tertiary)' }}>
           {copied ? Icons.check : Icons.copy}
         </button>
         <button
           onClick={() => onOpen(bookmark)}
-          className="p-2 text-zinc-500 hover:text-purple-400 rounded-lg transition-colors"
+          className="p-2 rounded-lg transition-colors"
+          style={{ color: 'var(--color-text-tertiary)' }}
         >
           {Icons.external}
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); onDelete?.(bookmark.id); }}
-          className="p-2 text-zinc-500 hover:text-red-400 rounded-lg transition-colors"
+          className="p-2 hover:text-red-400 rounded-lg transition-colors"
+          style={{ color: 'var(--color-text-tertiary)' }}
         >
           {Icons.trash}
         </button>
@@ -316,14 +325,16 @@ function AddBookmarkForm({ onSubmit, onCancel }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Paste a URL to save..."
-          className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
+          className="w-full px-4 py-3 rounded-xl focus:outline-none transition-all"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
           autoFocus
         />
       </div>
       <button
         type="submit"
         disabled={!url.trim() || loading}
-        className="px-6 py-3 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-medium rounded-xl hover:from-purple-500 hover:to-violet-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-purple-500/20 flex items-center gap-2"
+        className="px-6 py-3 text-white font-medium rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+        style={{ backgroundColor: 'var(--color-accent)' }}
       >
         {loading ? (
           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -463,46 +474,49 @@ export default function BookmarksPage() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950 relative overflow-hidden">
+    <div className="h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       <DashboardBackground />
       
       <div className="relative z-10 flex flex-col h-full">
         <Header />
         
         {/* Page Header */}
-        <div className="border-b border-zinc-700/50 bg-zinc-900/60 backdrop-blur-xl">
+        <div className="border-b backdrop-blur-xl" style={{ borderColor: 'var(--color-border)', backgroundColor: 'color-mix(in srgb, var(--color-bg-primary) 60%, transparent)' }}>
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => router.push('/dashboard')}
-                  className="p-2 hover:bg-zinc-800/50 rounded-lg transition-all text-zinc-400 hover:text-purple-400"
+                  className="p-2 rounded-lg transition-all"
+                  style={{ color: 'var(--color-text-secondary)' }}
                 >
                   {Icons.back}
                 </button>
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-400">
+                  <div className="p-3 rounded-2xl" style={{ background: 'linear-gradient(to bottom right, color-mix(in srgb, var(--color-accent) 20%, transparent), color-mix(in srgb, var(--color-accent) 10%, transparent))', color: 'var(--color-accent)' }}>
                     {Icons.sparkles}
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold text-zinc-100">Saved Links</h1>
-                    <p className="text-sm text-zinc-400">{bookmarks.length} bookmarks in your collection</p>
+                    <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Saved Links</h1>
+                    <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{bookmarks.length} bookmarks in your collection</p>
                   </div>
                 </div>
               </div>
               
               <div className="flex items-center gap-3">
                 {/* View Toggle */}
-                <div className="flex items-center bg-zinc-800/50 rounded-xl p-1 border border-zinc-700/50">
+                <div className="flex items-center rounded-xl p-1" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
                   <button
                     onClick={() => setViewMode('grid')}
-                    className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-purple-500 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+                    className="p-2 rounded-lg transition-all"
+                    style={viewMode === 'grid' ? { backgroundColor: 'var(--color-accent)', color: 'white' } : { color: 'var(--color-text-secondary)' }}
                   >
                     {Icons.grid}
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-purple-500 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+                    className="p-2 rounded-lg transition-all"
+                    style={viewMode === 'list' ? { backgroundColor: 'var(--color-accent)', color: 'white' } : { color: 'var(--color-text-secondary)' }}
                   >
                     {Icons.list}
                   </button>
@@ -511,7 +525,8 @@ export default function BookmarksPage() {
                 {/* Add Button */}
                 <button
                   onClick={() => setShowAddForm(!showAddForm)}
-                  className="px-4 py-2.5 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-medium rounded-xl hover:from-purple-500 hover:to-violet-500 transition-all shadow-lg shadow-purple-500/20 flex items-center gap-2"
+                  className="px-4 py-2.5 text-white font-medium rounded-xl transition-all flex items-center gap-2"
+                  style={{ backgroundColor: 'var(--color-accent)' }}
                 >
                   {Icons.plus}
                   Add Bookmark
@@ -521,7 +536,7 @@ export default function BookmarksPage() {
 
             {/* Add Form */}
             {showAddForm && (
-              <div className="mb-6 p-4 bg-zinc-800/30 rounded-2xl border border-zinc-700/50">
+              <div className="mb-6 p-4 rounded-2xl" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
                 <AddBookmarkForm onSubmit={handleCreate} onCancel={() => setShowAddForm(false)} />
               </div>
             )}
@@ -530,7 +545,7 @@ export default function BookmarksPage() {
             <div className="flex items-center gap-4 flex-wrap">
               {/* Search */}
               <div className="relative flex-1 max-w-md">
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-tertiary)' }}>
                   {Icons.search}
                 </div>
                 <input
@@ -538,7 +553,8 @@ export default function BookmarksPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search bookmarks..."
-                  className="w-full pl-10 pr-4 py-2.5 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-purple-500/50 transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl focus:outline-none transition-all"
+                  style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
                 />
               </div>
 
@@ -556,11 +572,11 @@ export default function BookmarksPage() {
                   <button
                     key={f.id}
                     onClick={() => setFilter(f.id)}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
-                      filter === f.id
-                        ? 'bg-purple-500/20 text-purple-300 ring-1 ring-purple-500/30'
-                        : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
+                    className="px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all"
+                    style={filter === f.id
+                      ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent)' }
+                      : { color: 'var(--color-text-secondary)' }
+                    }
                   >
                     {f.label}
                     {counts[f.id] > 0 && (
@@ -578,14 +594,15 @@ export default function BookmarksPage() {
           <div className="max-w-7xl mx-auto">
             {filteredBookmarks.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-64 text-center">
-                <div className="w-20 h-20 rounded-3xl bg-zinc-800/50 flex items-center justify-center mb-4 text-zinc-600">
+                <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)' }}>
                   {Icons.link}
                 </div>
-                <p className="text-lg text-zinc-400">No bookmarks yet</p>
-                <p className="text-sm text-zinc-500 mt-1">Save your first link to get started</p>
+                <p className="text-lg" style={{ color: 'var(--color-text-secondary)' }}>No bookmarks yet</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--color-text-tertiary)' }}>Save your first link to get started</p>
                 <button
                   onClick={() => setShowAddForm(true)}
-                  className="mt-4 px-4 py-2 bg-purple-500/20 text-purple-300 rounded-xl hover:bg-purple-500/30 transition-all"
+                  className="mt-4 px-4 py-2 rounded-xl transition-all"
+                  style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent)' }}
                 >
                   Add your first bookmark
                 </button>

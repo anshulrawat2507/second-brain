@@ -50,24 +50,25 @@ export function BacklinksPanel({ noteId, noteTitle, notes = [], onNavigate }) {
 
   return (
     <div 
-      className="border-t border-zinc-700/50 bg-zinc-900/50"
+      style={{ borderTop: '1px solid var(--color-border)', backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)' }}
     >
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-3 hover:bg-zinc-800 transition-colors"
+        className="w-full flex items-center justify-between p-3 transition-colors"
       >
-        <div className="flex items-center gap-2 text-sm text-zinc-400">
+        <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-text-muted)' }}>
           <span>🔗</span>
           <span className="font-medium">Backlinks</span>
-          <span className="text-xs px-1.5 py-0.5 bg-purple-500 text-white rounded">
+          <span className="text-xs px-1.5 py-0.5 text-white rounded" style={{ backgroundColor: 'var(--color-accent)' }}>
             {backlinks.length}
           </span>
         </div>
         <span 
-          className={`text-zinc-400 transition-transform ${
+          className={`transition-transform ${
             isExpanded ? 'rotate-90' : ''
           }`}
+          style={{ color: 'var(--color-text-muted)' }}
         >
           ▶
         </span>
@@ -80,22 +81,23 @@ export function BacklinksPanel({ noteId, noteTitle, notes = [], onNavigate }) {
             <button
               key={backlink.id}
               onClick={() => onNavigate(backlink.id)}
-              className="w-full text-left p-2 rounded border border-zinc-700/50 bg-zinc-800/50 hover:bg-zinc-800 transition-colors group"
+              className="w-full text-left p-2 rounded transition-colors group"
+              style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-elevated)' }}
             >
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-sm">
                   {backlink.isFavorite ? '⭐' : '📝'}
                 </span>
-                <span className="text-sm font-medium text-zinc-100 group-hover:text-purple-400 transition-colors flex-1 truncate">
+                <span className="text-sm font-medium transition-colors flex-1 truncate" style={{ color: 'var(--color-text-primary)' }}>
                   {backlink.title}
                 </span>
                 {backlink.linkCount > 1 && (
-                  <span className="text-xs text-zinc-500">
+                  <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
                     ×{backlink.linkCount}
                   </span>
                 )}
               </div>
-              <p className="text-xs text-zinc-400 line-clamp-2 pl-6">
+              <p className="text-xs line-clamp-2 pl-6" style={{ color: 'var(--color-text-muted)' }}>
                 {backlink.context}
               </p>
             </button>

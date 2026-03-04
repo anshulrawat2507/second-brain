@@ -34,7 +34,7 @@ export function BookmarkItem({
 
   if (isGrid) {
     return (
-      <div className="group bg-zinc-900/50 rounded-xl border border-zinc-700/50 overflow-hidden hover:border-purple-500/50 transition-all">
+      <div className="group rounded-xl border overflow-hidden transition-all" style={{ backgroundColor: 'var(--color-bg-primary)', borderColor: 'var(--color-border)' }}>
         {/* Preview Image */}
         {bookmark.preview_image_url ? (
           <div 
@@ -44,7 +44,8 @@ export function BookmarkItem({
           />
         ) : (
           <div 
-            className="h-32 bg-zinc-800/50 flex items-center justify-center cursor-pointer"
+            className="h-32 flex items-center justify-center cursor-pointer"
+            style={{ backgroundColor: 'var(--color-bg-secondary)' }}
             onClick={() => onClick(bookmark)}
           >
             <span className="text-4xl opacity-30">🔗</span>
@@ -67,12 +68,13 @@ export function BookmarkItem({
             {/* Title & URL */}
             <div className="flex-1 min-w-0">
               <h3 
-                className="font-medium text-zinc-200 truncate cursor-pointer hover:text-purple-400 transition-colors"
+                className="font-medium truncate cursor-pointer transition-colors"
+                style={{ color: 'var(--color-text-primary)' }}
                 onClick={() => onClick(bookmark)}
               >
                 {bookmark.title}
               </h3>
-              <p className="text-xs text-zinc-500 truncate">
+              <p className="text-xs truncate" style={{ color: 'var(--color-text-tertiary)' }}>
                 {hostname}
               </p>
             </div>
@@ -80,7 +82,7 @@ export function BookmarkItem({
 
           {/* Description */}
           {bookmark.description && (
-            <p className="text-sm text-zinc-400 mt-2 line-clamp-2">
+            <p className="text-sm mt-2 line-clamp-2" style={{ color: 'var(--color-text-secondary)' }}>
               {bookmark.description}
             </p>
           )}
@@ -88,12 +90,12 @@ export function BookmarkItem({
           {/* Meta */}
           <div className="flex items-center gap-2 mt-3 flex-wrap">
             {bookmark.category && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
+              <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent)' }}>
                 {bookmark.category}
               </span>
             )}
             {bookmark.click_count > 0 && (
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>
                 👁 {bookmark.click_count}
               </span>
             )}
@@ -103,14 +105,16 @@ export function BookmarkItem({
           <div className="flex items-center justify-end gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={onEdit}
-              className="p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+              className="p-1.5 rounded-lg transition-all"
+              style={{ color: 'var(--color-text-tertiary)' }}
               title="Edit"
             >
               ✏️
             </button>
             <button
               onClick={() => onDelete(bookmark.id)}
-              className="p-1.5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+              className="p-1.5 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+              style={{ color: 'var(--color-text-tertiary)' }}
               title="Delete"
             >
               🗑️
@@ -123,9 +127,9 @@ export function BookmarkItem({
 
   // List view
   return (
-    <div className="group flex items-center gap-4 p-4 bg-zinc-900/50 rounded-xl border border-zinc-700/50 hover:border-purple-500/50 transition-all">
+    <div className="group flex items-center gap-4 p-4 rounded-xl border transition-all" style={{ backgroundColor: 'var(--color-bg-primary)', borderColor: 'var(--color-border)' }}>
       {/* Favicon */}
-      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-zinc-800/50 flex items-center justify-center overflow-hidden">
+      <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
         {bookmark.favicon_url ? (
           <img 
             src={bookmark.favicon_url} 
@@ -145,33 +149,35 @@ export function BookmarkItem({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <h3 
-            className="font-medium text-zinc-200 truncate cursor-pointer hover:text-purple-400 transition-colors"
+            className="font-medium truncate cursor-pointer transition-colors"
+            style={{ color: 'var(--color-text-primary)' }}
             onClick={() => onClick(bookmark)}
           >
             {bookmark.title}
           </h3>
           {bookmark.click_count > 0 && (
-            <span className="text-xs text-zinc-500 flex-shrink-0">
+            <span className="text-xs flex-shrink-0" style={{ color: 'var(--color-text-tertiary)' }}>
               👁 {bookmark.click_count}
             </span>
           )}
         </div>
         
-        <p className="text-sm text-zinc-500 truncate">
+        <p className="text-sm truncate" style={{ color: 'var(--color-text-tertiary)' }}>
           {hostname}
         </p>
 
         {/* Tags & Category */}
         <div className="flex items-center gap-2 mt-1.5 flex-wrap">
           {bookmark.category && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400">
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent)' }}>
               {bookmark.category}
             </span>
           )}
           {bookmark.tags?.map(tag => (
             <span 
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400"
+              className="text-xs px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}
             >
               #{tag}
             </span>
@@ -183,21 +189,24 @@ export function BookmarkItem({
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={() => onClick(bookmark)}
-          className="p-2 text-zinc-500 hover:text-purple-400 hover:bg-zinc-800 rounded-lg transition-all"
+          className="p-2 rounded-lg transition-all"
+          style={{ color: 'var(--color-text-tertiary)' }}
           title="Open link"
         >
           🔗
         </button>
         <button
           onClick={onEdit}
-          className="p-2 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+          className="p-2 rounded-lg transition-all"
+          style={{ color: 'var(--color-text-tertiary)' }}
           title="Edit"
         >
           ✏️
         </button>
         <button
           onClick={() => onDelete(bookmark.id)}
-          className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+          className="p-2 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+          style={{ color: 'var(--color-text-tertiary)' }}
           title="Delete"
         >
           🗑️

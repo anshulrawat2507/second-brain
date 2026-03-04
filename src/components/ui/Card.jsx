@@ -6,10 +6,14 @@ export function Card({ children, className, hover = false, onClick }) {
   return (
     <div
       className={cn(
-        'bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl',
-        hover && 'hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer',
+        'backdrop-blur-sm rounded-xl transition-all duration-300',
+        hover && 'cursor-pointer',
         className
       )}
+      style={{
+        backgroundColor: 'var(--color-bg-secondary)',
+        border: '1px solid var(--color-border)',
+      }}
       onClick={onClick}
     >
       {children}
@@ -19,7 +23,7 @@ export function Card({ children, className, hover = false, onClick }) {
 
 export function CardHeader({ children, className }) {
   return (
-    <div className={cn('px-6 py-4 border-b border-zinc-800', className)}>
+    <div className={cn('px-6 py-4', className)} style={{ borderBottom: '1px solid var(--color-border)' }}>
       {children}
     </div>
   );
@@ -27,7 +31,7 @@ export function CardHeader({ children, className }) {
 
 export function CardTitle({ children, className }) {
   return (
-    <h3 className={cn('text-lg font-semibold text-white', className)}>
+    <h3 className={cn('text-lg font-semibold', className)} style={{ color: 'var(--color-text-primary)' }}>
       {children}
     </h3>
   );
@@ -43,7 +47,7 @@ export function CardContent({ children, className }) {
 
 export function CardFooter({ children, className }) {
   return (
-    <div className={cn('px-6 py-4 border-t border-zinc-800', className)}>
+    <div className={cn('px-6 py-4', className)} style={{ borderTop: '1px solid var(--color-border)' }}>
       {children}
     </div>
   );

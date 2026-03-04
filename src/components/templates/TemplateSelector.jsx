@@ -157,34 +157,34 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
     <>
       <Modal isOpen={isOpen} onClose={onClose} title="Choose a Template" size="xl">
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 mb-4 pb-4 border-b border-zinc-700/50">
+        <div className="flex items-center gap-2 mb-4 pb-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
           <button
             onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-              filter === 'all' 
-                ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-500/20' 
-                : 'bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-zinc-200'
-            }`}
+            className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200"
+            style={filter === 'all' 
+              ? { backgroundColor: 'var(--color-accent)', color: 'white' }
+              : { backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }
+            }
           >
             All ({templates.length})
           </button>
           <button
             onClick={() => setFilter('builtin')}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-              filter === 'builtin' 
-                ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-500/20' 
-                : 'bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-zinc-200'
-            }`}
+            className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200"
+            style={filter === 'builtin' 
+              ? { backgroundColor: 'var(--color-accent)', color: 'white' }
+              : { backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }
+            }
           >
             Built-in ({builtinCount})
           </button>
           <button
             onClick={() => setFilter('custom')}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-              filter === 'custom' 
-                ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-500/20' 
-                : 'bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-400 hover:text-zinc-200'
-            }`}
+            className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200"
+            style={filter === 'custom' 
+              ? { backgroundColor: 'var(--color-accent)', color: 'white' }
+              : { backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }
+            }
           >
             My Templates ({customCount})
           </button>
@@ -195,32 +195,32 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
         </div>
 
         {isLoading ? (
-          <div className="text-center py-8 text-zinc-400">
-            <div className="inline-block w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mb-2"></div>
+          <div className="text-center py-8" style={{ color: 'var(--color-text-secondary)' }}>
+            <div className="inline-block w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mb-2" style={{ borderColor: 'var(--color-accent)', borderTopColor: 'transparent' }}></div>
             <p>Loading templates...</p>
           </div>
         ) : filteredTemplates.length === 0 ? (
-          <div className="text-center py-8 text-zinc-400">
+          <div className="text-center py-8" style={{ color: 'var(--color-text-secondary)' }}>
             {filter === 'custom' ? (
               <>
                 <div className="text-4xl mb-2">📄</div>
                 <p className="font-medium">No custom templates yet</p>
-                <p className="text-sm mt-1 text-zinc-500">Create your first template to get started</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--color-text-tertiary)' }}>Create your first template to get started</p>
               </>
             ) : (
               <p>No templates found</p>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent pr-1">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto scrollbar-thin scrollbar-track-transparent pr-1">
             {filteredTemplates.map((template) => (
               <div
                 key={template.id}
-                className={`relative group p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
-                  selectedId === template.id
-                    ? 'border-purple-500 bg-purple-500/10 shadow-lg shadow-purple-500/10'
-                    : 'border-zinc-700/50 hover:border-purple-500/50 hover:bg-zinc-800/50'
-                }`}
+                className="relative group p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer"
+                style={selectedId === template.id
+                  ? { borderColor: 'var(--color-accent)', backgroundColor: 'var(--color-accent-muted)' }
+                  : { borderColor: 'var(--color-border)', backgroundColor: 'transparent' }
+                }
               >
                 <button
                   onClick={() => handleSelect(template)}
@@ -229,11 +229,11 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
                   className="w-full text-left"
                 >
                   <div className="text-2xl mb-2">{template.icon}</div>
-                  <div className="font-medium text-zinc-200">{template.name}</div>
-                  <div className="text-xs text-zinc-500 mt-1 flex items-center gap-2">
+                  <div className="font-medium" style={{ color: 'var(--color-text-primary)' }}>{template.name}</div>
+                  <div className="text-xs mt-1 flex items-center gap-2" style={{ color: 'var(--color-text-tertiary)' }}>
                     <span>{template.content.split('\n').length} lines</span>
                     {template.is_builtin && (
-                      <span className="px-1.5 py-0.5 bg-purple-500/20 text-purple-400 rounded text-[10px] font-medium">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-medium" style={{ backgroundColor: 'var(--color-accent-muted)', color: 'var(--color-accent)' }}>
                         Built-in
                       </span>
                     )}
@@ -245,7 +245,8 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
                   <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                     <button
                       onClick={(e) => { e.stopPropagation(); startEdit(template); }}
-                      className="p-1.5 rounded-lg bg-zinc-800 hover:bg-purple-600 text-zinc-400 hover:text-white transition-colors"
+                      className="p-1.5 rounded-lg transition-colors"
+                      style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}
                       title="Edit template"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -255,7 +256,8 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); handleDelete(template); }}
-                      className="p-1.5 rounded-lg bg-zinc-800 hover:bg-red-600 text-zinc-400 hover:text-white transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                      style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}
                       title="Delete template"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -269,10 +271,10 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-zinc-700/50 flex justify-between items-center">
-          <p className="text-xs text-zinc-500 flex items-center gap-2">
-            <span className="text-purple-400">💡</span> 
-            Use <code className="px-1.5 py-0.5 bg-zinc-800 rounded font-mono text-purple-400">{'{{date}}'}</code> for dynamic dates
+        <div className="mt-4 pt-4 flex justify-between items-center" style={{ borderTop: '1px solid var(--color-border)' }}>
+          <p className="text-xs flex items-center gap-2" style={{ color: 'var(--color-text-tertiary)' }}>
+            <span style={{ color: 'var(--color-accent)' }}>💡</span> 
+            Use <code className="px-1.5 py-0.5 rounded font-mono" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{date}}'}</code> for dynamic dates
           </p>
           <Button variant="secondary" onClick={onClose}>
             Cancel
@@ -291,19 +293,21 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
           <div className="flex gap-4">
             {/* Icon Selector */}
             <div>
-              <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Icon</label>
+              <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Icon</label>
               <div className="relative">
                 <button
-                  className="w-12 h-12 text-2xl bg-zinc-800/50 border border-zinc-700/50 rounded-xl hover:border-purple-500/50 transition-colors"
+                  className="w-12 h-12 text-2xl rounded-xl transition-colors"
+                  style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}
                 >
                   {formIcon}
                 </button>
-                <div className="absolute top-full left-0 mt-1 p-2 bg-zinc-900 border border-zinc-700/50 rounded-xl shadow-xl z-10 grid grid-cols-4 gap-1 w-max opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity">
+                <div className="absolute top-full left-0 mt-1 p-2 rounded-xl shadow-xl z-10 grid grid-cols-4 gap-1 w-max opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity" style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)' }}>
                   {TEMPLATE_ICONS.map(icon => (
                     <button
                       key={icon}
                       onClick={() => setFormIcon(icon)}
-                      className={`p-2 text-lg rounded-lg transition-colors ${formIcon === icon ? 'bg-purple-600/20 ring-1 ring-purple-500' : 'hover:bg-zinc-800'}`}
+                      className="p-2 text-lg rounded-lg transition-colors"
+                      style={formIcon === icon ? { backgroundColor: 'var(--color-accent-muted)', outline: '1px solid var(--color-accent)' } : {}}
                     >
                       {icon}
                     </button>
@@ -325,26 +329,27 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
 
           {/* Content Textarea */}
           <div>
-            <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Template Content</label>
+            <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Template Content</label>
             <textarea
               value={formContent}
               onChange={(e) => setFormContent(e.target.value)}
               placeholder="# Template Title&#10;&#10;Start writing your template content...&#10;&#10;Use {{date}}, {{time}}, {{datetime}} for dynamic values."
               rows={12}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 font-mono text-sm resize-none transition-all"
+              className="w-full px-4 py-3 rounded-xl focus:outline-none font-mono text-sm resize-none transition-all"
+              style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
             />
-            <p className="text-xs text-zinc-500 mt-2 flex flex-wrap gap-2">
-              <span className="text-zinc-400">Variables:</span>
-              <code className="px-1.5 py-0.5 bg-zinc-800 rounded text-purple-400">{'{{date}}'}</code>
-              <code className="px-1.5 py-0.5 bg-zinc-800 rounded text-purple-400">{'{{time}}'}</code>
-              <code className="px-1.5 py-0.5 bg-zinc-800 rounded text-purple-400">{'{{datetime}}'}</code>
-              <code className="px-1.5 py-0.5 bg-zinc-800 rounded text-purple-400">{'{{year}}'}</code>
-              <code className="px-1.5 py-0.5 bg-zinc-800 rounded text-purple-400">{'{{month}}'}</code>
-              <code className="px-1.5 py-0.5 bg-zinc-800 rounded text-purple-400">{'{{day}}'}</code>
+            <p className="text-xs mt-2 flex flex-wrap gap-2" style={{ color: 'var(--color-text-tertiary)' }}>
+              <span style={{ color: 'var(--color-text-secondary)' }}>Variables:</span>
+              <code className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{date}}'}</code>
+              <code className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{time}}'}</code>
+              <code className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{datetime}}'}</code>
+              <code className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{year}}'}</code>
+              <code className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{month}}'}</code>
+              <code className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-accent)' }}>{'{{day}}'}</code>
             </p>
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-zinc-700/50">
+          <div className="flex justify-end gap-2 pt-4" style={{ borderTop: '1px solid var(--color-border)' }}>
             <Button variant="secondary" onClick={() => { setShowCreateModal(false); resetForm(); }}>
               Cancel
             </Button>
@@ -366,13 +371,14 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
           <div className="flex gap-4">
             {/* Icon Selector */}
             <div>
-              <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Icon</label>
-              <div className="grid grid-cols-8 gap-1 p-2 bg-zinc-800/50 border border-zinc-700/50 rounded-xl">
+              <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Icon</label>
+              <div className="grid grid-cols-8 gap-1 p-2 rounded-xl" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
                 {TEMPLATE_ICONS.map(icon => (
                   <button
                     key={icon}
                     onClick={() => setFormIcon(icon)}
-                    className={`p-2 text-lg rounded-lg transition-colors ${formIcon === icon ? 'bg-purple-600/20 ring-1 ring-purple-500' : 'hover:bg-zinc-700/50'}`}
+                    className="p-2 text-lg rounded-lg transition-colors"
+                    style={formIcon === icon ? { backgroundColor: 'var(--color-accent-muted)', outline: '1px solid var(--color-accent)' } : {}}
                   >
                     {icon}
                   </button>
@@ -390,16 +396,17 @@ export function TemplateSelector({ isOpen, onClose, onSelect }) {
 
           {/* Content Textarea */}
           <div>
-            <label className="block text-sm text-zinc-400 mb-1.5 font-medium">Template Content</label>
+            <label className="block text-sm mb-1.5 font-medium" style={{ color: 'var(--color-text-secondary)' }}>Template Content</label>
             <textarea
               value={formContent}
               onChange={(e) => setFormContent(e.target.value)}
               rows={12}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 font-mono text-sm resize-none transition-all"
+              className="w-full px-4 py-3 rounded-xl focus:outline-none font-mono text-sm resize-none transition-all"
+              style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
             />
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-zinc-700/50">
+          <div className="flex justify-end gap-2 pt-4" style={{ borderTop: '1px solid var(--color-border)' }}>
             <Button variant="secondary" onClick={() => { setShowEditModal(false); resetForm(); }}>
               Cancel
             </Button>

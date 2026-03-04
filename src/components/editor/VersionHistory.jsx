@@ -58,20 +58,20 @@ export function VersionHistory({ noteId, isOpen, onClose, onRestore }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div 
-        className="relative w-full max-w-2xl max-h-[80vh] bg-zinc-900 border border-zinc-700/50 rounded-lg shadow-2xl overflow-hidden"
-        style={{ fontFamily: 'var(--font-mono)' }}
+        className="relative w-full max-w-2xl max-h-[80vh] rounded-lg shadow-2xl overflow-hidden"
+        style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', fontFamily: 'var(--font-mono)' }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-zinc-700/50 bg-zinc-800">
-          <div className="flex items-center gap-2 text-zinc-100">
-            <History className="w-5 h-5 text-purple-500" />
+        <div className="flex items-center justify-between p-4" style={{ borderBottom: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-elevated)' }}>
+          <div className="flex items-center gap-2" style={{ color: 'var(--color-text-primary)' }}>
+            <History className="w-5 h-5" style={{ color: 'var(--color-accent)' }} />
             <span className="font-bold">VERSION HISTORY</span>
           </div>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-zinc-950 rounded transition-colors"
+            className="p-1 rounded transition-colors"
           >
-            <X className="w-5 h-5 text-zinc-400" />
+            <X className="w-5 h-5" style={{ color: 'var(--color-text-muted)' }} />
           </button>
         </div>
 
@@ -79,12 +79,12 @@ export function VersionHistory({ noteId, isOpen, onClose, onRestore }) {
         <div className="overflow-y-auto max-h-[calc(80vh-80px)] p-4">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="animate-pulse text-zinc-400">
+              <div className="animate-pulse" style={{ color: 'var(--color-text-muted)' }}>
                 Loading versions...
               </div>
             </div>
           ) : versions.length === 0 ? (
-            <div className="text-center py-12 text-zinc-400">
+            <div className="text-center py-12" style={{ color: 'var(--color-text-muted)' }}>
               <History className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p>No version history yet</p>
               <p className="text-sm mt-2 opacity-75">
@@ -96,22 +96,23 @@ export function VersionHistory({ noteId, isOpen, onClose, onRestore }) {
               {versions.map((version, index) => (
                 <div
                   key={version.id}
-                  className="border border-zinc-700/50 rounded-lg overflow-hidden bg-zinc-950"
+                  className="rounded-lg overflow-hidden"
+                  style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-primary)' }}
                 >
                   {/* Version Header */}
                   <div 
-                    className="flex items-center justify-between p-3 cursor-pointer hover:bg-zinc-800 transition-colors"
+                    className="flex items-center justify-between p-3 cursor-pointer transition-colors"
                     onClick={() => toggleExpand(version.id)}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-xs px-2 py-1 bg-purple-600 text-white rounded font-mono">
+                      <span className="text-xs px-2 py-1 text-white rounded font-mono" style={{ backgroundColor: 'var(--color-accent)' }}>
                         v{version.version_number}
                       </span>
                       <div>
-                        <p className="text-sm text-zinc-100 font-medium">
+                        <p className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>
                           {version.title}
                         </p>
-                        <p className="text-xs text-zinc-400">
+                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
                           {formatDistanceToNow(new Date(version.created_at), { addSuffix: true })}
                         </p>
                       </div>
@@ -124,28 +125,29 @@ export function VersionHistory({ noteId, isOpen, onClose, onRestore }) {
                             handleRestore(version);
                           }}
                           disabled={restoring === version.id}
-                          className="flex items-center gap-1 px-3 py-1.5 text-xs bg-purple-600 text-white rounded hover:opacity-90 transition-opacity disabled:opacity-50"
+                          className="flex items-center gap-1 px-3 py-1.5 text-xs text-white rounded hover:opacity-90 transition-opacity disabled:opacity-50"
+                          style={{ backgroundColor: 'var(--color-accent)' }}
                         >
                           <RotateCcw className="w-3 h-3" />
                           {restoring === version.id ? 'Restoring...' : 'Restore'}
                         </button>
                       )}
                       {expandedVersion === version.id ? (
-                        <ChevronUp className="w-4 h-4 text-zinc-400" />
+                        <ChevronUp className="w-4 h-4" style={{ color: 'var(--color-text-muted)' }} />
                       ) : (
-                        <ChevronDown className="w-4 h-4 text-zinc-400" />
+                        <ChevronDown className="w-4 h-4" style={{ color: 'var(--color-text-muted)' }} />
                       )}
                     </div>
                   </div>
 
                   {/* Expanded Content Preview */}
                   {expandedVersion === version.id && (
-                    <div className="border-t border-zinc-700/50 p-4 bg-zinc-800">
-                      <div className="flex items-center gap-2 mb-2 text-xs text-zinc-400">
+                    <div className="p-4" style={{ borderTop: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-elevated)' }}>
+                      <div className="flex items-center gap-2 mb-2 text-xs" style={{ color: 'var(--color-text-muted)' }}>
                         <Eye className="w-3 h-3" />
                         Content Preview
                       </div>
-                      <pre className="text-sm text-zinc-100 whitespace-pre-wrap font-mono bg-zinc-950 p-3 rounded border border-zinc-700/50 max-h-48 overflow-y-auto">
+                      <pre className="text-sm whitespace-pre-wrap font-mono p-3 rounded max-h-48 overflow-y-auto" style={{ color: 'var(--color-text-primary)', backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)' }}>
                         {version.content.slice(0, 500)}
                         {version.content.length > 500 && '...'}
                       </pre>

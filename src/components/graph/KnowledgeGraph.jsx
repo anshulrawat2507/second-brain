@@ -246,8 +246,8 @@ export function KnowledgeGraph({ className }) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-zinc-500">Loading graph...</p>
+          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--color-accent)', borderTopColor: 'transparent' }} />
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Loading graph...</p>
         </div>
       </div>
     );
@@ -257,8 +257,8 @@ export function KnowledgeGraph({ className }) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-zinc-900 flex items-center justify-center">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--color-text-muted)' }}>
               <circle cx="12" cy="12" r="2" />
               <circle cx="6" cy="6" r="2" />
               <circle cx="18" cy="6" r="2" />
@@ -267,8 +267,8 @@ export function KnowledgeGraph({ className }) {
               <path d="M10.5 10.5 7.5 7.5M13.5 10.5l3-3M10.5 13.5l-3 3M13.5 13.5l3 3" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-zinc-100 mb-1">No connections yet</h3>
-          <p className="text-sm text-zinc-500">Create notes with backlinks to see your knowledge graph</p>
+          <h3 className="text-lg font-medium mb-1" style={{ color: 'var(--color-text-primary)' }}>No connections yet</h3>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Create notes with backlinks to see your knowledge graph</p>
         </div>
       </div>
     );
@@ -290,7 +290,8 @@ export function KnowledgeGraph({ className }) {
       <div className="absolute bottom-4 right-4 flex items-center gap-2">
         <button
           onClick={() => setZoom(z => Math.min(3, z * 1.2))}
-          className="w-8 h-8 flex items-center justify-center bg-zinc-900 border border-zinc-700/50 rounded-lg text-zinc-400 hover:text-zinc-200 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
@@ -299,7 +300,8 @@ export function KnowledgeGraph({ className }) {
         </button>
         <button
           onClick={() => setZoom(z => Math.max(0.3, z * 0.8))}
-          className="w-8 h-8 flex items-center justify-center bg-zinc-900 border border-zinc-700/50 rounded-lg text-zinc-400 hover:text-zinc-200 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
@@ -308,7 +310,8 @@ export function KnowledgeGraph({ className }) {
         </button>
         <button
           onClick={() => { setZoom(1); setOffset({ x: 0, y: 0 }); }}
-          className="w-8 h-8 flex items-center justify-center bg-zinc-900 border border-zinc-700/50 rounded-lg text-zinc-400 hover:text-zinc-200 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M3.5 5.5 2 7l5 5-5 5 1.5 1.5L10 12zM14 18h8M14 12h8M14 6h8" />
@@ -317,16 +320,16 @@ export function KnowledgeGraph({ className }) {
       </div>
 
       {/* Legend */}
-      <div className="absolute top-4 left-4 p-3 bg-zinc-900/90 backdrop-blur border border-zinc-700/50 rounded-lg">
-        <p className="text-xs font-medium text-zinc-400 mb-2">Knowledge Graph</p>
-        <p className="text-[10px] text-zinc-500">{data.nodes.length} notes • {data.links.length} connections</p>
+      <div className="absolute top-4 left-4 p-3 backdrop-blur rounded-lg" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
+        <p className="text-xs font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Knowledge Graph</p>
+        <p className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>{data.nodes.length} notes • {data.links.length} connections</p>
       </div>
 
       {/* Hovered node info */}
       {hoveredNode && (
-        <div className="absolute bottom-4 left-4 p-3 bg-zinc-900/90 backdrop-blur border border-zinc-700/50 rounded-lg max-w-xs">
-          <p className="text-sm font-medium text-zinc-100 truncate">{hoveredNode.title}</p>
-          <p className="text-xs text-zinc-500">{hoveredNode.connections} connections</p>
+        <div className="absolute bottom-4 left-4 p-3 backdrop-blur rounded-lg max-w-xs" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
+          <p className="text-sm font-medium truncate" style={{ color: 'var(--color-text-primary)' }}>{hoveredNode.title}</p>
+          <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{hoveredNode.connections} connections</p>
         </div>
       )}
     </div>

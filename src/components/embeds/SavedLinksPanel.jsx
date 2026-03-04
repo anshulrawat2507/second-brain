@@ -33,7 +33,7 @@ const PlatformIcon = ({ platform, size = 16 }) => {
       </svg>
     ),
     twitter: (
-      <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" className="text-zinc-100">
+      <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" style={{ color: 'var(--color-text-primary)' }}>
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
       </svg>
     ),
@@ -148,29 +148,30 @@ export function SavedLinksPanel({
       />
 
       {/* Panel - Floating card style */}
-      <div className="relative ml-auto mr-4 my-4 w-full max-w-md bg-zinc-900/95 backdrop-blur-xl border border-zinc-800/50 rounded-2xl flex flex-col overflow-hidden shadow-2xl shadow-black/50 animate-in slide-in-from-right-8 duration-300">
+      <div className="relative ml-auto mr-4 my-4 w-full max-w-md backdrop-blur-xl rounded-2xl flex flex-col overflow-hidden shadow-2xl shadow-black/50 animate-in slide-in-from-right-8 duration-300" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
         
         {/* Header - Minimal */}
-        <div className="flex items-center justify-between p-5 border-b border-zinc-800/50">
+        <div className="flex items-center justify-between p-5" style={{ borderBottom: '1px solid var(--color-border)' }}>
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-400">
+            <div className="p-2 rounded-xl" style={{ background: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent-muted)' }}>
               {Icons.sparkles}
             </div>
             <div>
-              <h2 className="text-base font-semibold text-zinc-100">Saved Links</h2>
-              <p className="text-xs text-zinc-500">{links.length} links collected</p>
+              <h2 className="text-base font-semibold" style={{ color: 'var(--color-text-primary)' }}>Saved Links</h2>
+              <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{links.length} links collected</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all"
+            className="p-2 rounded-lg transition-all"
+            style={{ color: 'var(--color-text-muted)' }}
           >
             {Icons.close}
           </button>
         </div>
 
         {/* Add Link */}
-        <div className="p-4 border-b border-zinc-800/50">
+        <div className="p-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
           <div className="flex gap-2">
             <input
               type="url"
@@ -178,11 +179,13 @@ export function SavedLinksPanel({
               onChange={(e) => { setNewUrl(e.target.value); setUrlError(''); }}
               onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
               placeholder="Paste a link..."
-              className="flex-1 px-4 py-2.5 bg-zinc-800/30 border border-zinc-700/30 rounded-xl text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-purple-500/40 focus:bg-zinc-800/50 transition-all"
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm focus:outline-none transition-all"
+              style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
             />
             <button
               onClick={handlePaste}
-              className="p-2.5 rounded-xl bg-zinc-800/30 border border-zinc-700/30 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-700/30 transition-all"
+              className="p-2.5 rounded-xl transition-all"
+              style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
               title="Paste"
             >
               {Icons.copy}
@@ -190,7 +193,8 @@ export function SavedLinksPanel({
             <button
               onClick={handleAdd}
               disabled={!newUrl.trim()}
-              className="px-4 py-2.5 rounded-xl bg-purple-500 text-white text-sm font-medium hover:bg-purple-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-2.5 rounded-xl text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              style={{ backgroundColor: 'var(--color-accent)' }}
             >
               Save
             </button>
@@ -204,18 +208,20 @@ export function SavedLinksPanel({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
-                activeTab === tab.id
-                  ? 'bg-purple-500/20 text-purple-300 ring-1 ring-purple-500/30'
-                  : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all`}
+              style={activeTab === tab.id
+                ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)', color: 'var(--color-accent-muted)', boxShadow: 'inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 30%, transparent)' }
+                : { color: 'var(--color-text-muted)' }
+              }
             >
               {tab.id !== 'all' && <PlatformIcon platform={tab.id} size={12} />}
               <span>{tab.label}</span>
               {counts[tab.id] > 0 && (
-                <span className={`px-1.5 rounded-full text-[10px] tabular-nums ${
-                  activeTab === tab.id ? 'bg-purple-500/30' : 'bg-zinc-800'
-                }`}>
+                <span className={`px-1.5 rounded-full text-[10px] tabular-nums`}
+                  style={activeTab === tab.id
+                    ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 30%, transparent)' }
+                    : { backgroundColor: 'var(--color-bg-elevated)' }
+                  }>
                   {counts[tab.id]}
                 </span>
               )}
@@ -227,11 +233,11 @@ export function SavedLinksPanel({
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
           {filteredLinks.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-48 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-zinc-800/50 flex items-center justify-center mb-4 text-zinc-600">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--color-bg-elevated)', color: 'var(--color-text-muted)' }}>
                 {activeTab === 'all' ? Icons.link : <PlatformIcon platform={activeTab} size={24} />}
               </div>
-              <p className="text-sm text-zinc-400">No links yet</p>
-              <p className="text-xs text-zinc-600 mt-1">Paste a link above to get started</p>
+              <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>No links yet</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>Paste a link above to get started</p>
             </div>
           ) : (
             filteredLinks.map((link) => (
@@ -263,7 +269,7 @@ function LinkCard({ link, onRemove, onOpenNote }) {
   };
 
   return (
-    <div className={`group relative p-3 rounded-xl bg-zinc-800/30 border border-zinc-700/20 hover:border-zinc-600/30 hover:bg-zinc-800/50 transition-all`}>
+    <div className={`group relative p-3 rounded-xl transition-all`} style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)' }}>
       <div className="flex gap-3">
         {/* Thumbnail */}
         {thumbnail ? (
@@ -271,7 +277,8 @@ function LinkCard({ link, onRemove, onOpenNote }) {
             href={link.url} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="relative w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 group/thumb bg-zinc-900"
+            className="relative w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 group/thumb"
+            style={{ backgroundColor: 'var(--color-bg-secondary)' }}
           >
             <img src={thumbnail} alt="" className="w-full h-full object-cover" />
             <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
@@ -297,17 +304,19 @@ function LinkCard({ link, onRemove, onOpenNote }) {
             href={link.url} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-sm font-medium text-zinc-200 hover:text-white line-clamp-1 transition-colors"
+            className="text-sm font-medium line-clamp-1 transition-colors"
+            style={{ color: 'var(--color-text-primary)' }}
           >
             {link.title || new URL(link.url).hostname}
           </a>
-          <p className="text-xs text-zinc-600 truncate mt-0.5">{link.url}</p>
+          <p className="text-xs truncate mt-0.5" style={{ color: 'var(--color-text-muted)' }}>{link.url}</p>
 
           {/* Note reference */}
           {link.noteTitle && link.noteId && (
             <button
               onClick={() => onOpenNote?.(link.noteId)}
-              className="flex items-center gap-1 mt-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors"
+              className="flex items-center gap-1 mt-1.5 text-xs transition-colors"
+              style={{ color: 'var(--color-accent-muted)' }}
             >
               {Icons.note}
               <span className="truncate">{link.noteTitle}</span>
@@ -319,7 +328,8 @@ function LinkCard({ link, onRemove, onOpenNote }) {
         <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={copyUrl}
-            className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors"
+            className="p-1.5 rounded-lg transition-colors"
+            style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)' }}
             title="Copy"
           >
             {copied ? (
@@ -330,7 +340,8 @@ function LinkCard({ link, onRemove, onOpenNote }) {
           </button>
           <button
             onClick={() => onRemove?.(link.id)}
-            className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-red-400 transition-colors"
+            className="p-1.5 rounded-lg transition-colors"
+            style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)' }}
             title="Remove"
           >
             {Icons.trash}

@@ -111,7 +111,7 @@ export default function TagsPage() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950 relative overflow-hidden">
+    <div className="h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       {/* Three.js animated background */}
       <DashboardBackground />
       
@@ -120,26 +120,27 @@ export default function TagsPage() {
         <Header />
         
         {/* Page header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-700/50 bg-zinc-900/60 backdrop-blur-xl">
+        <div className="flex items-center justify-between px-6 py-4 backdrop-blur-xl" style={{ borderBottom: '1px solid var(--color-border)', backgroundColor: 'color-mix(in srgb, var(--color-bg-primary) 60%, transparent)' }}>
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push('/dashboard')}
-              className="p-2 hover:bg-zinc-800/50 rounded-lg transition-all text-zinc-400 hover:text-purple-400"
+              className="p-2 rounded-lg transition-all"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               ← Back
             </button>
             <div className="flex items-center gap-3">
               <div className="text-2xl">🏷️</div>
               <div>
-                <h1 className="text-xl font-bold text-zinc-100">Tag Management</h1>
-                <p className="text-sm text-zinc-400">Organize and manage your tags</p>
+                <h1 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Tag Management</h1>
+                <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Organize and manage your tags</p>
               </div>
             </div>
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="text-sm text-zinc-400">
-              <span className="font-bold text-purple-500">{tags.length}</span> tags
+            <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+              <span className="font-bold" style={{ color: 'var(--color-accent)' }}>{tags.length}</span> tags
             </div>
           </div>
         </div>
@@ -155,28 +156,26 @@ export default function TagsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search tags..."
-                className="w-full pl-12 pr-4 py-3 bg-zinc-900/60 backdrop-blur-xl border border-zinc-700/50 
-                  rounded-xl text-zinc-100 placeholder:text-zinc-500
-                  focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none
-                  transition-all duration-200"
+                className="w-full pl-12 pr-4 py-3 backdrop-blur-xl rounded-xl focus:outline-none transition-all duration-200"
+                style={{ backgroundColor: 'color-mix(in srgb, var(--color-bg-primary) 60%, transparent)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
               />
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4">
               <Card className="text-center">
-                <div className="text-3xl font-bold text-purple-500">{tags.length}</div>
-                <div className="text-sm text-zinc-400">Total Tags</div>
+                <div className="text-3xl font-bold" style={{ color: 'var(--color-accent)' }}>{tags.length}</div>
+                <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Total Tags</div>
               </Card>
               <Card className="text-center">
-                <div className="text-3xl font-bold text-purple-500">{totalNotes}</div>
-                <div className="text-sm text-zinc-400">Tag Uses</div>
+                <div className="text-3xl font-bold" style={{ color: 'var(--color-accent)' }}>{totalNotes}</div>
+                <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Tag Uses</div>
               </Card>
               <Card className="text-center">
-                <div className="text-3xl font-bold text-purple-500">
+                <div className="text-3xl font-bold" style={{ color: 'var(--color-accent)' }}>
                   {tags.length > 0 ? Math.round(totalNotes / tags.length) : 0}
                 </div>
-                <div className="text-sm text-zinc-400">Avg per Tag</div>
+                <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Avg per Tag</div>
               </Card>
             </div>
 
@@ -191,8 +190,8 @@ export default function TagsPage() {
                           type="text"
                           value={newTagName}
                           onChange={(e) => setNewTagName(e.target.value)}
-                          className="flex-1 px-3 py-2 bg-zinc-950/50 border border-zinc-700/50 rounded-lg
-                            text-zinc-100 focus:border-purple-500 focus:outline-none"
+                          className="flex-1 px-3 py-2 rounded-lg focus:outline-none"
+                          style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
                           autoFocus
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') handleRenameTag(tag.name);
@@ -224,8 +223,8 @@ export default function TagsPage() {
                         <div className="flex items-center gap-3">
                           <span className="text-2xl">🏷️</span>
                           <div>
-                            <div className="font-medium text-zinc-100">#{tag.name}</div>
-                            <div className="text-xs text-zinc-400">
+                            <div className="font-medium" style={{ color: 'var(--color-text-primary)' }}>#{tag.name}</div>
+                            <div className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
                               {tag.count} {tag.count === 1 ? 'note' : 'notes'}
                             </div>
                           </div>
@@ -236,14 +235,16 @@ export default function TagsPage() {
                               setEditingTag(tag.name);
                               setNewTagName(tag.name);
                             }}
-                            className="p-2 text-zinc-400 hover:text-purple-400 hover:bg-purple-500/20 rounded-lg transition-all"
+                            className="p-2 rounded-lg transition-all"
+                            style={{ color: 'var(--color-text-secondary)' }}
                             title="Rename tag"
                           >
                             ✏️
                           </button>
                           <button
                             onClick={() => handleDeleteTag(tag.name)}
-                            className="p-2 text-zinc-400 hover:text-red-400 hover:bg-red-400/20 rounded-lg transition-all"
+                            className="p-2 hover:text-red-400 hover:bg-red-400/20 rounded-lg transition-all"
+                            style={{ color: 'var(--color-text-secondary)' }}
                             title="Delete tag"
                           >
                             🗑️
@@ -257,10 +258,10 @@ export default function TagsPage() {
             ) : (
               <Card className="text-center py-12">
                 <div className="text-4xl mb-4">🏷️</div>
-                <h3 className="text-lg font-bold text-zinc-100 mb-2">
+                <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
                   {searchQuery ? 'No tags found' : 'No tags yet'}
                 </h3>
-                <p className="text-zinc-400">
+                <p style={{ color: 'var(--color-text-secondary)' }}>
                   {searchQuery 
                     ? 'Try a different search term' 
                     : 'Add #tags to your notes to organize them'}

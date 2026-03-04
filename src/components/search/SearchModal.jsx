@@ -109,7 +109,6 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
 
   const highlightMatch = (text, searchQuery) => {
     if (!searchQuery.trim()) return text;
-    // Extract general terms from the query (not operators)
     const terms = searchQuery.split(/\s+/)
       .filter(t => !t.includes(':') && !t.startsWith('-') && t !== 'OR')
       .map(t => t.replace(/"/g, ''));
@@ -119,7 +118,7 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
     const parts = text.split(regex);
     return parts.map((part, i) =>
       regex.test(part) ? (
-        <mark key={i} className="bg-purple-500/30 text-zinc-100 px-0.5 rounded">
+        <mark key={i} className="px-0.5 rounded" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 30%, transparent)', color: 'var(--color-text-primary)' }}>
           {part}
         </mark>
       ) : (
@@ -143,7 +142,7 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
       <div className="space-y-4">
         {/* Search Input */}
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-zinc-500">🔍</span>
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl" style={{ color: 'var(--color-text-muted)' }}>🔍</span>
           <input
             ref={inputRef}
             type="text"
@@ -151,26 +150,29 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder='Search notes... (try title:keyword, tag:name, "exact phrase")'
-            className="w-full pl-12 pr-16 py-4 text-base bg-zinc-800/40 border border-zinc-700/50 
-              rounded-xl text-zinc-100 placeholder:text-zinc-500 
-              focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 focus:outline-none
-              transition-all duration-200"
+            className="w-full pl-12 pr-16 py-4 text-base rounded-xl focus:outline-none focus:ring-2 transition-all duration-200"
+            style={{
+              backgroundColor: 'var(--color-bg-secondary)',
+              border: '1px solid var(--color-border)',
+              color: 'var(--color-text-primary)',
+              '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 30%, transparent)',
+            }}
             autoFocus
           />
           <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
             {isLoading && (
-              <svg className="animate-spin h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-4 w-4" style={{ color: 'var(--color-accent)' }} fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             )}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-xl transition-all duration-200 ${
-                showFilters || hasActiveFilters 
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/20' 
-                  : 'hover:bg-zinc-800/60 text-zinc-500 hover:text-zinc-300'
-              }`}
+              className="p-2 rounded-xl transition-all duration-200"
+              style={{
+                backgroundColor: showFilters || hasActiveFilters ? 'var(--color-accent)' : 'transparent',
+                color: showFilters || hasActiveFilters ? '#fff' : 'var(--color-text-muted)',
+              }}
               title="Toggle advanced filters"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -182,80 +184,52 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
 
         {/* Search Tips */}
         <div className="text-xs flex flex-wrap gap-2">
-          <span className="px-2.5 py-1.5 rounded-lg bg-zinc-800/40 text-zinc-500 border border-zinc-700/30">title:word</span>
-          <span className="px-2.5 py-1.5 rounded-lg bg-zinc-800/40 text-zinc-500 border border-zinc-700/30">tag:name</span>
-          <span className="px-2.5 py-1.5 rounded-lg bg-zinc-800/40 text-zinc-500 border border-zinc-700/30">"exact phrase"</span>
-          <span className="px-2.5 py-1.5 rounded-lg bg-zinc-800/40 text-zinc-500 border border-zinc-700/30">-exclude</span>
-          <span className="px-2.5 py-1.5 rounded-lg bg-zinc-800/40 text-zinc-500 border border-zinc-700/30">word1 OR word2</span>
+          {['title:word', 'tag:name', '"exact phrase"', '-exclude', 'word1 OR word2'].map(tip => (
+            <span key={tip} className="px-2.5 py-1.5 rounded-lg" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)', border: '1px solid var(--color-border)' }}>{tip}</span>
+          ))}
         </div>
 
         {/* Advanced Filters Panel */}
         {showFilters && (
-          <div className="p-4 rounded-xl bg-zinc-800/30 border border-zinc-700/30 space-y-4">
+          <div className="p-4 rounded-xl space-y-4" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>
             <div className="grid grid-cols-2 gap-4">
-              {/* Date Range */}
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-1.5">From Date</label>
-                <input
-                  type="date"
-                  value={dateFrom}
-                  onChange={(e) => setDateFrom(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-800/40 border border-zinc-700/50 rounded-xl text-zinc-100 text-sm focus:outline-none focus:border-purple-500/50"
-                />
+                <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-tertiary)' }}>From Date</label>
+                <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl text-sm focus:outline-none"
+                  style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
               </div>
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-1.5">To Date</label>
-                <input
-                  type="date"
-                  value={dateTo}
-                  onChange={(e) => setDateTo(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-800/40 border border-zinc-700/50 rounded-xl text-zinc-100 text-sm focus:outline-none focus:border-purple-500/50"
-                />
+                <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-tertiary)' }}>To Date</label>
+                <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl text-sm focus:outline-none"
+                  style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }} />
               </div>
-
-              {/* Folder */}
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-1.5">Folder</label>
-                <select
-                  value={selectedFolder}
-                  onChange={(e) => setSelectedFolder(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-800/40 border border-zinc-700/50 rounded-xl text-zinc-100 text-sm focus:outline-none focus:border-purple-500/50"
-                >
+                <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--color-text-tertiary)' }}>Folder</label>
+                <select value={selectedFolder} onChange={(e) => setSelectedFolder(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl text-sm focus:outline-none"
+                  style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}>
                   <option value="">All Folders</option>
                   {folders.map(folder => (
                     <option key={folder.id} value={folder.id}>{folder.name}</option>
                   ))}
                 </select>
               </div>
-
-              {/* Options */}
               <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={caseSensitive}
-                    onChange={(e) => setCaseSensitive(e.target.checked)}
-                    className="w-4 h-4 rounded accent-purple-500"
-                  />
+                <label className="flex items-center gap-2 text-xs cursor-pointer" style={{ color: 'var(--color-text-tertiary)' }}>
+                  <input type="checkbox" checked={caseSensitive} onChange={(e) => setCaseSensitive(e.target.checked)} className="w-4 h-4 rounded" style={{ accentColor: 'var(--color-accent)' }} />
                   Case Sensitive
                 </label>
-                <label className="flex items-center gap-2 text-xs text-zinc-400 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={useRegex}
-                    onChange={(e) => setUseRegex(e.target.checked)}
-                    className="w-4 h-4 rounded accent-purple-500"
-                  />
+                <label className="flex items-center gap-2 text-xs cursor-pointer" style={{ color: 'var(--color-text-tertiary)' }}>
+                  <input type="checkbox" checked={useRegex} onChange={(e) => setUseRegex(e.target.checked)} className="w-4 h-4 rounded" style={{ accentColor: 'var(--color-accent)' }} />
                   Regex
                 </label>
               </div>
             </div>
 
             {hasActiveFilters && (
-              <button
-                onClick={clearFilters}
-                className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
-              >
+              <button onClick={clearFilters} className="text-sm transition-colors" style={{ color: 'var(--color-accent)' }}>
                 Clear Filters
               </button>
             )}
@@ -263,46 +237,46 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
         )}
 
         {/* Results */}
-        <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+        <div className="max-h-96 overflow-y-auto">
           {results.length > 0 ? (
             <div className="space-y-2">
-              <div className="text-sm text-zinc-500 px-2 pb-2">
+              <div className="text-sm px-2 pb-2" style={{ color: 'var(--color-text-muted)' }}>
                 {totalCount} result{totalCount !== 1 ? 's' : ''} found
               </div>
               {results.map((note, index) => (
                 <button
                   key={note.id}
                   onClick={() => handleSelectNote(note)}
-                  className={`w-full text-left p-4 rounded-xl transition-all duration-200 ${
-                    index === selectedIndex
-                      ? 'bg-purple-500/15 border border-purple-500/50 shadow-lg shadow-purple-500/10'
-                      : 'hover:bg-zinc-800/40 border border-transparent'
-                  }`}
+                  className="w-full text-left p-4 rounded-xl transition-all duration-200"
+                  style={{
+                    backgroundColor: index === selectedIndex ? 'color-mix(in srgb, var(--color-accent) 15%, transparent)' : 'transparent',
+                    border: index === selectedIndex ? '1px solid color-mix(in srgb, var(--color-accent) 50%, transparent)' : '1px solid transparent',
+                  }}
                 >
                   <div className="flex items-center gap-2">
                     {note.is_favorite && <span className="text-amber-400">⭐</span>}
-                    <span className="font-semibold text-zinc-200">
+                    <span className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                       {highlightMatch(note.title || 'Untitled', query)}
                     </span>
                   </div>
                   
-                  {/* Match Context */}
                   {note.matchContext ? (
-                    <p className="text-sm text-zinc-500 mt-2 line-clamp-2 leading-relaxed">
+                    <p className="text-sm mt-2 line-clamp-2 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
                       {highlightMatch(note.matchContext, query)}
                     </p>
                   ) : (
-                    <p className="text-sm text-zinc-500 mt-2 line-clamp-2 leading-relaxed">
+                    <p className="text-sm mt-2 line-clamp-2 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
                       {highlightMatch(note.content?.slice(0, 150) || '', query)}
                     </p>
                   )}
                   
                   <div className="flex items-center gap-3 mt-3 text-xs">
-                    <span className="text-zinc-600">{formatDate(note.updated_at, 'relative')}</span>
+                    <span style={{ color: 'var(--color-text-muted)' }}>{formatDate(note.updated_at, 'relative')}</span>
                     {note.tags?.length > 0 && (
                       <div className="flex items-center gap-1.5">
                         {note.tags.slice(0, 3).map((t) => (
-                          <span key={t} className="px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 text-[10px] font-medium">
+                          <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-medium"
+                            style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 15%, transparent)', color: 'var(--color-accent)' }}>
                             #{t}
                           </span>
                         ))}
@@ -313,13 +287,13 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
               ))}
             </div>
           ) : query.trim() || hasActiveFilters ? (
-            <div className="text-center py-12 text-zinc-500">
+            <div className="text-center py-12" style={{ color: 'var(--color-text-muted)' }}>
               <div className="text-4xl mb-4 opacity-50">🔍</div>
               {isLoading ? 'Searching...' : 'No notes found'}
               {hasActiveFilters && <p className="text-sm mt-2">Try adjusting your filters</p>}
             </div>
           ) : (
-            <div className="text-center py-12 text-zinc-500">
+            <div className="text-center py-12" style={{ color: 'var(--color-text-muted)' }}>
               <div className="text-4xl mb-4">💡</div>
               <p>Start typing to search your notes</p>
               <p className="text-xs mt-2 opacity-60">Use operators like title:, tag:, "quotes", or -exclude</p>
@@ -328,23 +302,21 @@ export function SearchModal({ isOpen, onClose, onSelectNote }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-zinc-800/50 text-xs text-zinc-500">
+        <div className="flex items-center justify-between pt-4 text-xs" style={{ borderTop: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}>
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5">
-              <kbd className="px-2 py-1 rounded-lg bg-zinc-800/60 border border-zinc-700/50 font-mono">↑↓</kbd>
-              Navigate
-            </span>
-            <span className="flex items-center gap-1.5">
-              <kbd className="px-2 py-1 rounded-lg bg-zinc-800/60 border border-zinc-700/50 font-mono">↵</kbd>
-              Select
-            </span>
-            <span className="flex items-center gap-1.5">
-              <kbd className="px-2 py-1 rounded-lg bg-zinc-800/60 border border-zinc-700/50 font-mono">Esc</kbd>
-              Close
-            </span>
+            {['↑↓ Navigate', '↵ Select', 'Esc Close'].map(hint => {
+              const [key, label] = hint.split(' ');
+              return (
+                <span key={hint} className="flex items-center gap-1.5">
+                  <kbd className="px-2 py-1 rounded-lg font-mono" style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}>{key}</kbd>
+                  {label}
+                </span>
+              );
+            })}
           </div>
           {results.length > 0 && (
-            <span className="px-2.5 py-1 rounded-full bg-purple-500/15 text-purple-400 font-medium">
+            <span className="px-2.5 py-1 rounded-full font-medium"
+              style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent) 15%, transparent)', color: 'var(--color-accent)' }}>
               {totalCount} results
             </span>
           )}

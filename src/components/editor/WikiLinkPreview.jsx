@@ -17,22 +17,24 @@ export function WikiLinkPreview({ url, noteId, notes, position, onNavigate }) {
 
   const preview = (
     <div
-      className="fixed z-50 w-80 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/50 rounded-xl shadow-xl overflow-hidden"
+      className="fixed z-50 w-80 backdrop-blur-xl rounded-xl shadow-xl overflow-hidden"
       style={{
         top: position.top,
-        left: position.left
+        left: position.left,
+        backgroundColor: 'var(--color-bg-elevated)',
+        border: '1px solid var(--color-border)'
       }}
     >
       {/* Header */}
-      <div className="px-4 py-3 border-b border-zinc-700/50 bg-zinc-800/50">
+      <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}>
         <div className="flex items-center gap-2">
           <span>{note.is_favorite ? '⭐' : '📝'}</span>
-          <span className="font-medium text-zinc-100 truncate">
+          <span className="font-medium truncate" style={{ color: 'var(--color-text-primary)' }}>
             {note.title}
           </span>
         </div>
         {note.folder_name && (
-          <div className="text-xs text-zinc-500 mt-1">
+          <div className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>
             📁 {note.folder_name}
           </div>
         )}
@@ -40,17 +42,18 @@ export function WikiLinkPreview({ url, noteId, notes, position, onNavigate }) {
 
       {/* Content Preview */}
       <div className="px-4 py-3 max-h-40 overflow-hidden">
-        <p className="text-sm text-zinc-400 line-clamp-5">
+        <p className="text-sm line-clamp-5" style={{ color: 'var(--color-text-secondary)' }}>
           {note.content?.slice(0, 300) || 'No content'}
           {note.content?.length > 300 && '...'}
         </p>
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-2 border-t border-zinc-700/50 bg-zinc-800/50">
+      <div className="px-4 py-2" style={{ borderTop: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}>
         <button
           onClick={() => onNavigate(note.id)}
-          className="text-xs text-purple-400 hover:text-purple-300"
+          className="text-xs"
+          style={{ color: 'var(--color-accent-muted)' }}
         >
           Open note →
         </button>

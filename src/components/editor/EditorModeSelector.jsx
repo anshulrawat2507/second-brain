@@ -18,44 +18,41 @@ export function EditorModeSelector({ compact = false }) {
 
   if (compact) {
     return (
-      <div className="flex items-center gap-1 p-1 bg-zinc-800 rounded-lg">
+      <div className="flex items-center gap-1 p-1 rounded-lg" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
         {editorModes.slice(0, 4).map((mode) => (
           <button
             key={mode.id}
             onClick={() => setEditorMode(mode.id)}
             title={mode.label}
-            className={cn(
-              'px-2 py-1 text-sm rounded transition-all duration-200',
-              editorMode === mode.id
-                ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700'
-            )}
+            className="px-2 py-1 text-sm rounded transition-all duration-200"
+            style={editorMode === mode.id
+              ? { backgroundColor: 'var(--color-accent)', color: '#fff' }
+              : { color: 'var(--color-text-muted)' }
+            }
           >
             {mode.icon}
           </button>
         ))}
         <div className="relative group">
           <button
-            className={cn(
-              'px-2 py-1 text-sm rounded transition-all duration-200',
-              ['focus', 'zen', 'typewriter', 'reading'].includes(editorMode)
-                ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700'
-            )}
+            className="px-2 py-1 text-sm rounded transition-all duration-200"
+            style={['focus', 'zen', 'typewriter', 'reading'].includes(editorMode)
+              ? { backgroundColor: 'var(--color-accent)', color: '#fff' }
+              : { color: 'var(--color-text-muted)' }
+            }
           >
             ⋯
           </button>
-          <div className="absolute right-0 top-full mt-1 w-40 bg-zinc-900 border border-zinc-700/50 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div className="absolute right-0 top-full mt-1 w-40 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50" style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)' }}>
             {editorModes.slice(3).map((mode) => (
               <button
                 key={mode.id}
                 onClick={() => setEditorMode(mode.id)}
-                className={cn(
-                  'w-full flex items-center gap-2 px-3 py-2 text-sm text-left transition-colors',
-                  editorMode === mode.id
-                    ? 'bg-purple-500/10 text-purple-400'
-                    : 'text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200'
-                )}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left transition-colors"
+                style={editorMode === mode.id
+                  ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)', color: 'var(--color-accent-muted)' }
+                  : { color: 'var(--color-text-muted)' }
+                }
               >
                 <span>{mode.icon}</span>
                 <span>{mode.label}</span>
@@ -69,29 +66,25 @@ export function EditorModeSelector({ compact = false }) {
 
   return (
     <div className="space-y-2">
-      <h3 className="text-sm font-medium text-zinc-100">Editor Mode</h3>
+      <h3 className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>Editor Mode</h3>
       <div className="grid grid-cols-2 gap-2">
         {editorModes.map((mode) => (
           <button
             key={mode.id}
             onClick={() => setEditorMode(mode.id)}
-            className={cn(
-              'flex flex-col items-start p-3 rounded-xl border-2 transition-all duration-200 text-left',
-              editorMode === mode.id
-                ? 'border-purple-500 bg-purple-500/10'
-                : 'border-zinc-700 hover:border-purple-500/50 bg-zinc-800'
-            )}
+            className="flex flex-col items-start p-3 rounded-xl border-2 transition-all duration-200 text-left"
+            style={editorMode === mode.id
+              ? { borderColor: 'var(--color-accent)', backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)' }
+              : { borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-elevated)' }
+            }
           >
             <div className="flex items-center gap-2 mb-1">
               <span className="text-lg">{mode.icon}</span>
-              <span className={cn(
-                'text-sm font-medium',
-                editorMode === mode.id ? 'text-purple-400' : 'text-zinc-100'
-              )}>
+              <span className="text-sm font-medium" style={{ color: editorMode === mode.id ? 'var(--color-accent-muted)' : 'var(--color-text-primary)' }}>
                 {mode.label}
               </span>
             </div>
-            <span className="text-xs text-zinc-400">
+            <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
               {mode.description}
             </span>
           </button>
@@ -111,7 +104,7 @@ export function useEditorModeStyles() {
       // Focus mode - centered, narrow content
       'max-w-2xl mx-auto': editorMode === 'focus',
       // Zen mode - fullscreen, no chrome
-      'fixed inset-0 z-50 bg-zinc-950 p-8': editorMode === 'zen',
+      'fixed inset-0 z-50 p-8': editorMode === 'zen',
       // Typewriter mode - keep cursor centered
       'typewriter-mode': editorMode === 'typewriter',
       // Reading mode - wider line spacing, serif font

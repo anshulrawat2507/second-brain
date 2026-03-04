@@ -131,30 +131,33 @@ export function CommandPalette({
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] pointer-events-none">
         <div 
-          className="bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/50 rounded-2xl shadow-2xl shadow-black/50 w-full max-w-lg pointer-events-auto animate-in fade-in slide-in-from-top-4 duration-200 overflow-hidden"
+          className="backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto animate-in fade-in slide-in-from-top-4 duration-200 overflow-hidden"
+          style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Search Input */}
-          <div className="flex items-center gap-3 px-5 py-4 border-b border-zinc-800/50">
-            <span className="text-purple-400 text-lg">⌘</span>
+          <div className="flex items-center gap-3 px-5 py-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
+            <span className="text-lg" style={{ color: 'var(--color-accent)' }}>⌘</span>
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Type a command or search..."
               autoFocus
-              className="flex-1 bg-transparent text-zinc-100 placeholder-zinc-500 outline-none text-sm"
+              className="flex-1 bg-transparent outline-none text-sm"
+              style={{ color: 'var(--color-text-primary)' }}
             />
-            <kbd className="px-2 py-1 text-[10px] bg-zinc-800/60 text-zinc-500 rounded-lg border border-zinc-700/50 font-mono">
+            <kbd className="px-2 py-1 text-[10px] rounded-lg font-mono"
+              style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)', border: '1px solid var(--color-border)' }}>
               ESC
             </kbd>
           </div>
 
           {/* Commands List */}
-          <div className="max-h-80 overflow-y-auto p-3 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+          <div className="max-h-80 overflow-y-auto p-3">
             {Object.entries(groupedCommands).map(([category, cmds]) => (
               <div key={category} className="mb-3">
-                <div className="px-3 py-1.5 text-[10px] text-zinc-600 font-bold uppercase tracking-widest">
+                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--color-text-muted)' }}>
                   {category}
                 </div>
                 {cmds.map((cmd) => {
@@ -166,22 +169,21 @@ export function CommandPalette({
                       key={cmd.id}
                       onClick={cmd.action}
                       onMouseEnter={() => setSelectedIndex(index)}
-                      className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left',
-                        isSelected
-                          ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/20'
-                          : 'text-zinc-300 hover:bg-zinc-800/60'
-                      )}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left"
+                      style={{
+                        backgroundColor: isSelected ? 'var(--color-accent)' : 'transparent',
+                        color: isSelected ? '#fff' : 'var(--color-text-secondary)',
+                      }}
                     >
                       <span className="text-lg">{cmd.icon}</span>
                       <span className="flex-1 text-sm font-medium">{cmd.label}</span>
                       {cmd.shortcut && (
-                        <kbd className={cn(
-                          'px-2 py-1 text-[10px] rounded-lg font-mono',
-                          isSelected 
-                            ? 'bg-white/20 text-white' 
-                            : 'bg-zinc-800/60 text-zinc-500 border border-zinc-700/50'
-                        )}>
+                        <kbd className="px-2 py-1 text-[10px] rounded-lg font-mono"
+                          style={{
+                            backgroundColor: isSelected ? 'rgba(255,255,255,0.2)' : 'var(--color-bg-secondary)',
+                            color: isSelected ? '#fff' : 'var(--color-text-muted)',
+                            border: isSelected ? 'none' : '1px solid var(--color-border)',
+                          }}>
                           {cmd.shortcut}
                         </kbd>
                       )}
@@ -192,21 +194,22 @@ export function CommandPalette({
             ))}
 
             {filteredCommands.length === 0 && (
-              <div className="py-10 text-center text-zinc-500">
+              <div className="py-10 text-center" style={{ color: 'var(--color-text-muted)' }}>
                 <p className="text-sm">No commands found</p>
               </div>
             )}
           </div>
 
           {/* Footer */}
-          <div className="px-5 py-3 border-t border-zinc-800/50 bg-zinc-900/50 flex items-center justify-between text-[10px] text-zinc-600">
+          <div className="px-5 py-3 flex items-center justify-between text-[10px]"
+            style={{ borderTop: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-muted)' }}>
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
-                <span className="px-1.5 py-0.5 bg-zinc-800/60 rounded border border-zinc-700/50">↑↓</span>
+                <span className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)' }}>↑↓</span>
                 Navigate
               </span>
               <span className="flex items-center gap-1">
-                <span className="px-1.5 py-0.5 bg-zinc-800/60 rounded border border-zinc-700/50">↵</span>
+                <span className="px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)' }}>↵</span>
                 Select
               </span>
             </div>

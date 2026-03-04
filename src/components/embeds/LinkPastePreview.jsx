@@ -139,23 +139,26 @@ export function LinkPastePreview({ url, onRemove, onEmbed, className, compact = 
     // Unknown platform - show generic link preview
     return (
       <div className={cn(
-        'flex items-center gap-3 p-3 rounded-xl border bg-zinc-900 border-zinc-700/50 group',
+        'flex items-center gap-3 p-3 rounded-xl border group',
         className
-      )}>
-        <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
+      )}
+        style={{ backgroundColor: 'var(--color-bg-secondary)', borderColor: 'var(--color-border)' }}
+      >
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--color-bg-elevated)', color: 'var(--color-text-muted)' }}>
           <LinkIcon />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-zinc-100 truncate">
+          <p className="text-sm font-medium truncate" style={{ color: 'var(--color-text-primary)' }}>
             External Link
           </p>
-          <p className="text-xs text-zinc-400 truncate">{url}</p>
+          <p className="text-xs truncate" style={{ color: 'var(--color-text-muted)' }}>{url}</p>
         </div>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-zinc-400 hover:text-purple-400 transition-colors"
+          className="p-2 transition-colors"
+          style={{ color: 'var(--color-text-muted)' }}
         >
           ↗
         </a>
@@ -179,8 +182,8 @@ export function LinkPastePreview({ url, onRemove, onEmbed, className, compact = 
         onClick={() => window.open(url, '_blank')}
       >
         <span style={{ color: platform.color }}>{platform.icon}</span>
-        <span className="text-sm font-medium text-zinc-100">{platform.name}</span>
-        <span className="text-xs text-zinc-400">↗</span>
+        <span className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>{platform.name}</span>
+        <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>↗</span>
       </div>
     );
   }
@@ -227,8 +230,8 @@ export function LinkPastePreview({ url, onRemove, onEmbed, className, compact = 
 
         {/* Info */}
         <div className="space-y-1">
-          <h3 className="font-semibold text-zinc-100">{title}</h3>
-          <p className="text-sm text-zinc-400 truncate">{subtitle}</p>
+          <h3 className="font-semibold" style={{ color: 'var(--color-text-primary)' }}>{title}</h3>
+          <p className="text-sm truncate" style={{ color: 'var(--color-text-muted)' }}>{subtitle}</p>
         </div>
 
         {/* Actions */}
@@ -246,7 +249,8 @@ export function LinkPastePreview({ url, onRemove, onEmbed, className, compact = 
           {onEmbed && (
             <button
               onClick={onEmbed}
-              className="px-4 py-2 rounded-lg border border-zinc-700 text-zinc-100 hover:bg-zinc-800 transition-all"
+              className="px-4 py-2 rounded-lg transition-all"
+              style={{ border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
             >
               Embed
             </button>
@@ -254,7 +258,8 @@ export function LinkPastePreview({ url, onRemove, onEmbed, className, compact = 
           {onRemove && (
             <button
               onClick={onRemove}
-              className="p-2 rounded-lg text-zinc-400 hover:text-red-500 hover:bg-red-500/10 transition-all"
+              className="p-2 rounded-lg hover:text-red-500 hover:bg-red-500/10 transition-all"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               ✕
             </button>
@@ -273,7 +278,8 @@ export function LinkBadge({ url, onClick }) {
   if (!platform) {
     return (
       <span 
-        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 text-xs cursor-pointer hover:bg-zinc-700 transition-colors"
+        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs cursor-pointer transition-colors"
+        style={{ backgroundColor: 'var(--color-bg-elevated)', color: 'var(--color-text-muted)' }}
         onClick={onClick}
       >
         🔗 Link

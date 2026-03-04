@@ -54,7 +54,7 @@ export function MediaEmbed({ url, className }) {
             onLoad={() => setIsLoading(false)}
           />
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-zinc-900">
+            <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
               <span className="text-2xl animate-pulse">▶️</span>
             </div>
           )}
@@ -113,13 +113,13 @@ function TwitterEmbed({ tweetId, url }) {
   }, [tweetId]);
 
   return (
-    <div className="rounded-xl overflow-hidden border border-zinc-700/50 bg-zinc-900">
+    <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}>
       {isLoading && (
         <div className="p-4 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-zinc-800 animate-pulse" />
+          <div className="w-10 h-10 rounded-full animate-pulse" style={{ backgroundColor: 'var(--color-bg-elevated)' }} />
           <div className="flex-1 space-y-2">
-            <div className="h-4 bg-zinc-800 rounded animate-pulse w-1/3" />
-            <div className="h-3 bg-zinc-800 rounded animate-pulse w-2/3" />
+            <div className="h-4 rounded animate-pulse w-1/3" style={{ backgroundColor: 'var(--color-bg-elevated)' }} />
+            <div className="h-3 rounded animate-pulse w-2/3" style={{ backgroundColor: 'var(--color-bg-elevated)' }} />
           </div>
         </div>
       )}
@@ -155,14 +155,14 @@ function InstagramEmbed({ postId, url }) {
   }, [postId]);
 
   return (
-    <div className="rounded-xl overflow-hidden border border-zinc-700/50 bg-zinc-900">
+    <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}>
       {isLoading && (
         <div className="p-4 space-y-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-zinc-800 animate-pulse" />
-            <div className="h-4 bg-zinc-800 rounded animate-pulse w-24" />
+            <div className="w-10 h-10 rounded-full animate-pulse" style={{ backgroundColor: 'var(--color-bg-elevated)' }} />
+            <div className="h-4 rounded animate-pulse w-24" style={{ backgroundColor: 'var(--color-bg-elevated)' }} />
           </div>
-          <div className="aspect-square bg-zinc-800 rounded animate-pulse" />
+          <div className="aspect-square rounded animate-pulse" style={{ backgroundColor: 'var(--color-bg-elevated)' }} />
         </div>
       )}
       <blockquote
@@ -187,21 +187,22 @@ function LinkPreview({ url }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block p-4 rounded-xl border border-zinc-700/50 bg-zinc-900 hover:bg-zinc-800 transition-all group"
+      className="block p-4 rounded-xl transition-all group"
+      style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}
     >
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-lg">
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
           🔗
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-zinc-100 truncate group-hover:text-purple-400 transition-colors">
+          <p className="text-sm font-medium truncate transition-colors" style={{ color: 'var(--color-text-primary)' }}>
             {domain}
           </p>
-          <p className="text-xs text-zinc-400 truncate">
+          <p className="text-xs truncate" style={{ color: 'var(--color-text-muted)' }}>
             {url}
           </p>
         </div>
-        <span className="text-zinc-400 group-hover:text-purple-400 transition-colors">
+        <span className="transition-colors" style={{ color: 'var(--color-text-muted)' }}>
           ↗
         </span>
       </div>
@@ -349,20 +350,22 @@ export function SavedLinksManager({ isOpen, onClose, onInsertEmbed }) {
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <div 
-          className="bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/50 rounded-2xl shadow-2xl w-full max-w-2xl pointer-events-auto max-h-[85vh] overflow-hidden flex flex-col"
+          className="backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-2xl pointer-events-auto max-h-[85vh] overflow-hidden flex flex-col"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-zinc-700/50">
+          <div className="flex items-center justify-between p-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
             <div className="flex items-center gap-3">
               <span className="text-2xl">🔗</span>
-              <h2 className="text-lg font-bold text-zinc-100">
+              <h2 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>
                 Saved Links & Embeds
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+              style={{ color: 'var(--color-text-muted)' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -371,27 +374,29 @@ export function SavedLinksManager({ isOpen, onClose, onInsertEmbed }) {
           </div>
 
           {/* Add Link */}
-          <div className="p-4 border-b border-zinc-700/50 space-y-3">
+          <div className="p-4 space-y-3" style={{ borderBottom: '1px solid var(--color-border)' }}>
             <div className="flex gap-2">
               <input
                 type="url"
                 value={newUrl}
                 onChange={(e) => handleUrlChange(e.target.value)}
                 placeholder="Paste YouTube, X, Instagram, or Reddit URL..."
-                className="flex-1 px-4 py-2 bg-zinc-800 border border-zinc-700/50 rounded-lg text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-purple-500"
+                className="flex-1 px-4 py-2 rounded-lg focus:outline-none"
+                style={{ backgroundColor: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
                 onKeyDown={(e) => e.key === 'Enter' && addLink()}
               />
               <button
                 onClick={addLink}
                 disabled={!previewUrl}
-                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-lg hover:opacity-90 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 text-white rounded-lg hover:opacity-90 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ backgroundColor: 'var(--color-accent)' }}
               >
                 Save
               </button>
             </div>
             
             {/* Platform Icons */}
-            <div className="flex items-center gap-4 text-xs text-zinc-500">
+            <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--color-text-muted)' }}>
               <span>Supported:</span>
               <div className="flex items-center gap-1 px-2 py-1 rounded-full" style={{ background: 'rgba(255, 0, 0, 0.1)' }}>
                 <YouTubeIcon /> <span className="hidden sm:inline">YouTube</span>
@@ -418,7 +423,7 @@ export function SavedLinksManager({ isOpen, onClose, onInsertEmbed }) {
           {/* Links List */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {links.length === 0 ? (
-              <div className="text-center py-8 text-zinc-500">
+              <div className="text-center py-8" style={{ color: 'var(--color-text-muted)' }}>
                 <span className="text-4xl mb-4 block">📎</span>
                 <p>No saved links yet</p>
                 <p className="text-sm">Paste a URL above to save it</p>
@@ -443,7 +448,7 @@ export function SavedLinksManager({ isOpen, onClose, onInsertEmbed }) {
                       <span className="text-sm font-semibold" style={{ color: colors.text }}>
                         {getPlatformName(link.type)}
                       </span>
-                      <span className="text-xs text-zinc-500 ml-auto">
+                      <span className="text-xs ml-auto" style={{ color: 'var(--color-text-muted)' }}>
                         {new Date(link.created_at).toLocaleDateString()}
                       </span>
                     </div>
@@ -468,7 +473,7 @@ export function SavedLinksManager({ isOpen, onClose, onInsertEmbed }) {
                         )}
                         
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm text-zinc-100 truncate">
+                          <p className="text-sm truncate" style={{ color: 'var(--color-text-primary)' }}>
                             {link.url}
                           </p>
                           
@@ -488,7 +493,8 @@ export function SavedLinksManager({ isOpen, onClose, onInsertEmbed }) {
                                 onInsertEmbed(link.url);
                                 onClose();
                               }}
-                              className="px-3 py-1.5 text-xs bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-lg hover:opacity-90 transition-all"
+                              className="px-3 py-1.5 text-xs text-white rounded-lg hover:opacity-90 transition-all"
+                              style={{ backgroundColor: 'var(--color-accent)' }}
                             >
                               Insert Embed
                             </button>
@@ -532,7 +538,7 @@ function LinkPreviewCard({ url }) {
         <span className="text-sm font-semibold" style={{ color: colors.text }}>
           {getPlatformName(type)}
         </span>
-        <span className="text-xs text-zinc-500 ml-auto">Preview</span>
+        <span className="text-xs ml-auto" style={{ color: 'var(--color-text-muted)' }}>Preview</span>
       </div>
       <div className="p-3 flex gap-3">
         {thumbnail && (
@@ -545,7 +551,7 @@ function LinkPreviewCard({ url }) {
             </div>
           </div>
         )}
-        <p className="text-sm text-zinc-400 truncate flex-1">{url}</p>
+        <p className="text-sm truncate flex-1" style={{ color: 'var(--color-text-secondary)' }}>{url}</p>
       </div>
     </div>
   );

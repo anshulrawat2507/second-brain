@@ -50,20 +50,25 @@ export function Modal({
       {/* Modal */}
       <div
         className={cn(
-          'relative w-full bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl',
+          'relative w-full rounded-xl shadow-2xl',
           'transform transition-all duration-300',
           'animate-in fade-in zoom-in-95',
           sizes[size],
           className
         )}
+        style={{
+          backgroundColor: 'var(--color-bg-elevated)',
+          border: '1px solid var(--color-border)',
+        }}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-            <h2 className="text-lg font-semibold text-white">{title}</h2>
+          <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--color-text-primary)' }}>{title}</h2>
             <button
               onClick={onClose}
-              className="p-1 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
+              className="p-1 rounded-lg transition-colors"
+              style={{ color: 'var(--color-text-tertiary)' }}
             >
               <X className="w-5 h-5" />
             </button>

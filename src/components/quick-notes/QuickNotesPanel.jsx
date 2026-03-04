@@ -40,16 +40,17 @@ export function QuickNotesPanel({ isOpen, onClose, onSave }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 w-96 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/50 rounded-2xl shadow-2xl shadow-black/50 z-50">
+    <div className="fixed bottom-4 right-4 w-96 backdrop-blur-xl rounded-2xl shadow-2xl z-50" style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)' }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-700/50">
+      <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--color-border)' }}>
         <div className="flex items-center gap-2">
           <span className="text-lg">⚡</span>
-          <span className="text-sm font-semibold text-zinc-200">Quick Note</span>
+          <span className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>Quick Note</span>
         </div>
         <button
           onClick={onClose}
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+          className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
+          style={{ color: 'var(--color-text-tertiary)' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M18 6L6 18M6 6l12 12" />
@@ -65,17 +66,16 @@ export function QuickNotesPanel({ isOpen, onClose, onSave }) {
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Jot down a quick thought..."
-          className="w-full h-32 p-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl 
-            text-zinc-200 placeholder:text-zinc-500
-            focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 focus:outline-none resize-none text-sm transition-all"
+          className="w-full h-32 p-3 rounded-xl focus:outline-none resize-none text-sm transition-all"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)', caretColor: 'var(--color-accent)' }}
         />
 
         <div className="flex items-center justify-between mt-3">
-          <span className="text-xs text-zinc-500 flex items-center gap-1.5">
-            <kbd className="px-1.5 py-0.5 bg-zinc-800 rounded text-[10px] font-medium text-zinc-400">Ctrl</kbd>
+          <span className="text-xs flex items-center gap-1.5" style={{ color: 'var(--color-text-tertiary)' }}>
+            <kbd className="px-1.5 py-0.5 rounded text-[10px] font-medium" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}>Ctrl</kbd>
             <span>+</span>
-            <kbd className="px-1.5 py-0.5 bg-zinc-800 rounded text-[10px] font-medium text-zinc-400">Enter</kbd>
-            <span className="text-zinc-600">to save</span>
+            <kbd className="px-1.5 py-0.5 rounded text-[10px] font-medium" style={{ backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-secondary)' }}>Enter</kbd>
+            <span style={{ color: 'var(--color-text-muted)' }}>to save</span>
           </span>
           <div className="flex gap-2">
             <Button variant="ghost" size="sm" onClick={onClose}>

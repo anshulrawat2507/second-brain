@@ -160,8 +160,11 @@ export function TodoList() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="inline-block w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-zinc-400">Loading todos...</p>
+          <div 
+            className="inline-block w-8 h-8 border-2 border-t-transparent rounded-full animate-spin mb-4"
+            style={{ borderColor: 'var(--color-accent)', borderTopColor: 'transparent' }}
+          ></div>
+          <p style={{ color: 'var(--color-text-muted)' }}>Loading todos...</p>
         </div>
       </div>
     );
@@ -174,15 +177,19 @@ export function TodoList() {
         <div className="flex items-center gap-3">
           <div className="text-2xl">✓</div>
           <div>
-            <h2 className="text-xl font-bold text-zinc-200">Todos</h2>
-            <p className="text-sm text-zinc-400">
+            <h2 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Todos</h2>
+            <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
               {completedTodos} of {totalTodos} completed
             </p>
           </div>
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-xl hover:from-purple-500 hover:to-violet-500 transition-all flex items-center gap-2 shadow-lg shadow-purple-500/20"
+          className="px-4 py-2 text-white rounded-xl transition-all flex items-center gap-2"
+          style={{ 
+            backgroundColor: 'var(--color-accent)',
+            boxShadow: '0 10px 15px -3px color-mix(in srgb, var(--color-accent) 20%, transparent)'
+          }}
         >
           <span>+</span>
           <span>Add Todo</span>
@@ -191,10 +198,10 @@ export function TodoList() {
 
       {/* Progress Bar */}
       {totalTodos > 0 && (
-        <div className="bg-zinc-800 rounded-full h-2 overflow-hidden">
+        <div className="rounded-full h-2 overflow-hidden" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
           <div 
-            className="h-full bg-gradient-to-r from-purple-600 to-violet-600 transition-all duration-500"
-            style={{ width: `${progressPercent}%` }}
+            className="h-full transition-all duration-500"
+            style={{ width: `${progressPercent}%`, backgroundColor: 'var(--color-accent)' }}
           />
         </div>
       )}
@@ -213,9 +220,15 @@ export function TodoList() {
       {/* Todo List */}
       <div className="space-y-3">
         {todos.length === 0 ? (
-          <div className="text-center py-12 bg-zinc-900/50 rounded-xl border border-zinc-700/50">
+          <div 
+            className="text-center py-12 rounded-xl border"
+            style={{ 
+              backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+              borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)'
+            }}
+          >
             <div className="text-4xl mb-4">📋</div>
-            <p className="text-zinc-400">
+            <p style={{ color: 'var(--color-text-muted)' }}>
               {filters.status === 'archived' 
                 ? 'No archived todos' 
                 : filters.status === 'completed'

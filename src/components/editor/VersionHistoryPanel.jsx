@@ -53,18 +53,19 @@ export function VersionHistoryPanel({ noteId, isOpen, onClose, onRestore }) {
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <div 
-          className="bg-zinc-900 border border-zinc-700/50 rounded-2xl shadow-2xl w-full max-w-4xl pointer-events-auto modal-in max-h-[85vh] overflow-hidden flex flex-col"
+          className="rounded-2xl shadow-2xl w-full max-w-4xl pointer-events-auto modal-in max-h-[85vh] overflow-hidden flex flex-col"
+          style={{ backgroundColor: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-zinc-700/50">
+          <div className="flex items-center justify-between p-4" style={{ borderBottom: '1px solid var(--color-border)' }}>
             <div className="flex items-center gap-3">
               <span className="text-2xl">📜</span>
               <div>
-                <h2 className="text-lg font-bold text-zinc-100">
+                <h2 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>
                   Version History
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
                   {versions.length} versions saved
                 </p>
               </div>
@@ -72,18 +73,18 @@ export function VersionHistoryPanel({ noteId, isOpen, onClose, onRestore }) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCompareMode(!compareMode)}
-                className={cn(
-                  'px-3 py-1.5 text-sm rounded-lg transition-all',
-                  compareMode
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-zinc-950 text-zinc-400 hover:text-zinc-100'
-                )}
+                className="px-3 py-1.5 text-sm rounded-lg transition-all"
+                style={compareMode
+                  ? { backgroundColor: 'var(--color-accent)', color: '#fff' }
+                  : { backgroundColor: 'var(--color-bg-primary)', color: 'var(--color-text-muted)' }
+                }
               >
                 Compare
               </button>
               <button
                 onClick={onClose}
-                className="p-2 text-zinc-400 hover:text-purple-400 hover:bg-zinc-800 rounded-lg transition-all"
+                className="p-2 rounded-lg transition-all"
+                style={{ color: 'var(--color-text-muted)' }}
               >
                 ✕
               </button>
@@ -93,9 +94,9 @@ export function VersionHistoryPanel({ noteId, isOpen, onClose, onRestore }) {
           {/* Content */}
           <div className="flex-1 flex overflow-hidden">
             {/* Versions List */}
-            <div className="w-64 border-r border-zinc-700/50 overflow-y-auto">
+            <div className="w-64 overflow-y-auto" style={{ borderRight: '1px solid var(--color-border)' }}>
               {isLoading ? (
-                <div className="p-4 text-center text-zinc-400">
+                <div className="p-4 text-center" style={{ color: 'var(--color-text-muted)' }}>
                   Loading...
                 </div>
               ) : versions.length > 0 ? (
@@ -104,40 +105,37 @@ export function VersionHistoryPanel({ noteId, isOpen, onClose, onRestore }) {
                     <button
                       key={version.id}
                       onClick={() => setSelectedVersion(version)}
-                      className={cn(
-                        'w-full text-left p-3 rounded-lg transition-all',
-                        selectedVersion?.id === version.id
-                          ? 'bg-purple-500/15 border-l-2 border-purple-500'
-                          : 'hover:bg-zinc-800'
-                      )}
+                      className="w-full text-left p-3 rounded-lg transition-all"
+                      style={selectedVersion?.id === version.id
+                        ? { backgroundColor: 'color-mix(in srgb, var(--color-accent) 15%, transparent)', borderLeft: '2px solid var(--color-accent)' }
+                        : {}
+                      }
                     >
                       <div className="flex items-center gap-2">
-                        <span className={cn(
-                          'px-1.5 py-0.5 text-xs rounded',
-                          index === 0 
-                            ? 'bg-green-500/20 text-green-400' 
-                            : 'bg-zinc-800 text-zinc-400'
-                        )}>
+                        <span className="px-1.5 py-0.5 text-xs rounded" style={index === 0 
+                          ? { backgroundColor: 'rgba(34,197,94,0.2)', color: '#4ade80' } 
+                          : { backgroundColor: 'var(--color-bg-elevated)', color: 'var(--color-text-muted)' }
+                        }>
                           v{version.version_number}
                         </span>
                         {index === 0 && (
-                          <span className="text-xs text-green-400">Latest</span>
+                          <span className="text-xs" style={{ color: '#4ade80' }}>Latest</span>
                         )}
                       </div>
-                      <p className="text-sm text-zinc-100 mt-1 truncate">
+                      <p className="text-sm mt-1 truncate" style={{ color: 'var(--color-text-primary)' }}>
                         {version.title || 'Untitled'}
                       </p>
-                      <p className="text-xs text-zinc-400 mt-0.5">
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
                         {formatDate(version.created_at, 'relative')}
                       </p>
-                      <div className="flex gap-2 mt-1 text-xs text-zinc-400">
+                      <div className="flex gap-2 mt-1 text-xs" style={{ color: 'var(--color-text-muted)' }}>
                         <span>{version.word_count} words</span>
                       </div>
                     </button>
                   ))}
                 </div>
               ) : (
-                <div className="p-4 text-center text-zinc-400">
+                <div className="p-4 text-center" style={{ color: 'var(--color-text-muted)' }}>
                   <p className="text-sm">No versions found</p>
                   <p className="text-xs mt-1">Versions are created automatically when you save</p>
                 </div>
@@ -150,29 +148,30 @@ export function VersionHistoryPanel({ noteId, isOpen, onClose, onRestore }) {
                 <div>
                   <div className="mb-4 flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-medium text-zinc-100">
+                      <h3 className="text-lg font-medium" style={{ color: 'var(--color-text-primary)' }}>
                         {selectedVersion.title || 'Untitled'}
                       </h3>
-                      <p className="text-sm text-zinc-400">
+                      <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
                         Version {selectedVersion.version_number} • {formatDate(selectedVersion.created_at, 'long')}
                       </p>
                     </div>
                     <button
                       onClick={handleRestore}
-                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:opacity-90 transition-all text-sm font-medium"
+                      className="px-4 py-2 text-white rounded-lg hover:opacity-90 transition-all text-sm font-medium"
+                      style={{ backgroundColor: 'var(--color-accent)' }}
                     >
                       Restore This Version
                     </button>
                   </div>
                   
-                  <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-700/50">
-                    <pre className="whitespace-pre-wrap text-sm text-zinc-100 font-mono">
+                  <div className="p-4 rounded-xl" style={{ backgroundColor: 'var(--color-bg-primary)', border: '1px solid var(--color-border)' }}>
+                    <pre className="whitespace-pre-wrap text-sm font-mono" style={{ color: 'var(--color-text-primary)' }}>
                       {selectedVersion.content}
                     </pre>
                   </div>
                 </div>
               ) : (
-                <div className="h-full flex items-center justify-center text-zinc-400">
+                <div className="h-full flex items-center justify-center" style={{ color: 'var(--color-text-muted)' }}>
                   <p>Select a version to preview</p>
                 </div>
               )}

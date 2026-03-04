@@ -163,24 +163,31 @@ export default function DashboardPage() {
   }, [editorContent, currentNote, debouncedSave]);
 
   // Create new note
-  const handleCreateNote = async () => {
+  const handleCreateNote = async (folderId = null) => {
+    console.log('[handleCreateNote] Called with folderId:', folderId);
     try {
+      const body = {
+        title: 'Untitled',
+        content: '# Untitled\n\nStart writing...',
+      };
+      if (folderId) body.folder_id = folderId;
+
+      console.log('[handleCreateNote] Sending POST /api/notes with body:', body);
       const response = await fetch('/api/notes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: 'Untitled',
-          content: '# Untitled\n\nStart writing...',
-        }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
+      console.log('[handleCreateNote] Response:', data);
 
       if (data.success) {
         addNote(data.data);
         setCurrentNote(data.data);
         setEditorContent(data.data.content);
-        toast.success('New note created');
+        const folderName = folderId ? folders.find(f => f.id === folderId)?.name : null;
+        toast.success(folderId ? `Note created in "${folderName}"` : 'New note created');
       } else {
         toast.error('Failed to create note');
       }
@@ -257,6 +264,30 @@ export default function DashboardPage() {
     } catch (error) {
       console.error('Error deleting note:', error);
       toast.error('Failed to delete note');
+    }
+  };
+
+  // Move note to folder
+  const handleMoveNote = async (noteId, folderId) => {
+    try {
+      const response = await fetch(`/api/notes/${noteId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ folder_id: folderId }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        updateNote(data.data);
+        const folderName = folderId ? folders.find(f => f.id === folderId)?.name : null;
+        toast.success(folderId ? `Moved to "${folderName}"` : 'Moved to Loose Notes');
+      } else {
+        toast.error('Failed to move note');
+      }
+    } catch (error) {
+      console.error('Error moving note:', error);
+      toast.error('Failed to move note');
     }
   };
 
@@ -408,7 +439,7 @@ export default function DashboardPage() {
   const { crtEnabled, crtIntensity } = useAppStore.getState();
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950 relative overflow-hidden">
+    <div className="h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       {/* Three.js animated background */}
       <DashboardBackground />
 
@@ -433,10 +464,12 @@ export default function DashboardPage() {
             notes={notes}
             folders={folders}
             onNoteSelect={handleNoteSelect}
-            onCreateNote={handleCreateNote}
+            onCreateNote={() => handleCreateNote()}
+            onCreateNoteInFolder={(folderId) => handleCreateNote(folderId)}
             onCreateFolder={() => setShowNewFolderModal(true)}
             onDeleteNote={handleDeleteNote}
             onDeleteFolder={handleDeleteFolder}
+            onMoveNote={handleMoveNote}
             onTemplatesClick={() => setShowTemplateSelector(true)}
             onJournalClick={() => setShowJournal(true)}
           />

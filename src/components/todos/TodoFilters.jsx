@@ -27,18 +27,45 @@ export function TodoFilters({ filters, onChange }) {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-4 p-4 bg-zinc-900/50 rounded-xl border border-zinc-700/50">
+    <div 
+      className="flex flex-wrap items-center gap-4 p-4 rounded-xl border"
+      style={{ 
+        backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+        borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)'
+      }}
+    >
       {/* Status Tabs */}
-      <div className="flex items-center gap-1 bg-zinc-800/50 rounded-lg p-1">
+      <div 
+        className="flex items-center gap-1 rounded-lg p-1"
+        style={{ backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)' }}
+      >
         {STATUS_OPTIONS.map(opt => (
           <button
             key={opt.value}
             onClick={() => updateFilter('status', opt.value)}
             className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all flex items-center gap-1.5 ${
-              filters.status === opt.value
-                ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-500/20'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/50'
+              filters.status === opt.value ? 'text-white' : ''
             }`}
+            style={
+              filters.status === opt.value
+                ? { 
+                    backgroundColor: 'var(--color-accent)',
+                    boxShadow: '0 10px 15px -3px color-mix(in srgb, var(--color-accent) 20%, transparent)'
+                  }
+                : { color: 'var(--color-text-secondary)' }
+            }
+            onMouseEnter={(e) => {
+              if (filters.status !== opt.value) {
+                e.currentTarget.style.color = 'var(--color-text-primary)';
+                e.currentTarget.style.backgroundColor = 'color-mix(in srgb, var(--color-bg-elevated) 50%, transparent)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (filters.status !== opt.value) {
+                e.currentTarget.style.color = 'var(--color-text-secondary)';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }
+            }}
           >
             <span>{opt.icon}</span>
             <span>{opt.label}</span>
@@ -46,15 +73,21 @@ export function TodoFilters({ filters, onChange }) {
         ))}
       </div>
 
-      <div className="h-6 w-px bg-zinc-700/50" />
+      <div className="h-6 w-px" style={{ backgroundColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)' }} />
 
       {/* Priority Filter */}
       <div className="flex items-center gap-2">
-        <span className="text-sm text-zinc-500">Priority:</span>
+        <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Priority:</span>
         <select
           value={filters.priority}
           onChange={(e) => updateFilter('priority', e.target.value)}
-          className="px-3 py-1.5 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+          className="px-3 py-1.5 border rounded-lg text-sm focus:outline-none focus:ring-2"
+          style={{ 
+            backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+            borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+            color: 'var(--color-text-primary)',
+            '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+          }}
         >
           {PRIORITY_OPTIONS.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -62,15 +95,21 @@ export function TodoFilters({ filters, onChange }) {
         </select>
       </div>
 
-      <div className="h-6 w-px bg-zinc-700/50" />
+      <div className="h-6 w-px" style={{ backgroundColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)' }} />
 
       {/* Sort */}
       <div className="flex items-center gap-2">
-        <span className="text-sm text-zinc-500">Sort:</span>
+        <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Sort:</span>
         <select
           value={filters.sortBy}
           onChange={(e) => updateFilter('sortBy', e.target.value)}
-          className="px-3 py-1.5 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+          className="px-3 py-1.5 border rounded-lg text-sm focus:outline-none focus:ring-2"
+          style={{ 
+            backgroundColor: 'color-mix(in srgb, var(--color-bg-secondary) 50%, transparent)',
+            borderColor: 'color-mix(in srgb, var(--color-border) 50%, transparent)',
+            color: 'var(--color-text-primary)',
+            '--tw-ring-color': 'color-mix(in srgb, var(--color-accent) 50%, transparent)'
+          }}
         >
           {SORT_OPTIONS.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -78,7 +117,10 @@ export function TodoFilters({ filters, onChange }) {
         </select>
         <button
           onClick={() => updateFilter('sortOrder', filters.sortOrder === 'asc' ? 'desc' : 'asc')}
-          className="p-1.5 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all"
+          className="p-1.5 rounded-lg transition-all"
+          style={{ color: 'var(--color-text-secondary)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-text-primary)'; e.currentTarget.style.backgroundColor = 'var(--color-bg-secondary)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-secondary)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
           title={filters.sortOrder === 'asc' ? 'Ascending' : 'Descending'}
         >
           {filters.sortOrder === 'asc' ? '↑' : '↓'}

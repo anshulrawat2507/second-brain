@@ -186,8 +186,8 @@ export function BookmarkList() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="inline-block w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-zinc-400">Loading bookmarks...</p>
+          <div className="inline-block w-8 h-8 border-2 border-t-transparent rounded-full animate-spin mb-4" style={{ borderColor: 'var(--color-accent)', borderTopColor: 'transparent' }}></div>
+          <p style={{ color: 'var(--color-text-secondary)' }}>Loading bookmarks...</p>
         </div>
       </div>
     );
@@ -200,25 +200,27 @@ export function BookmarkList() {
         <div className="flex items-center gap-3">
           <div className="text-2xl">🔗</div>
           <div>
-            <h2 className="text-xl font-bold text-zinc-200">Bookmarks</h2>
-            <p className="text-sm text-zinc-400">
+            <h2 className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Bookmarks</h2>
+            <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
               {bookmarks.length} saved links
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {/* View Toggle */}
-          <div className="flex items-center bg-zinc-800/50 rounded-lg p-1">
+          <div className="flex items-center rounded-lg p-1" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+              className="p-2 rounded-md transition-all"
+              style={viewMode === 'list' ? { backgroundColor: 'var(--color-accent)', color: 'white' } : { color: 'var(--color-text-secondary)' }}
               title="List view"
             >
               ☰
             </button>
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+              className="p-2 rounded-md transition-all"
+              style={viewMode === 'grid' ? { backgroundColor: 'var(--color-accent)', color: 'white' } : { color: 'var(--color-text-secondary)' }}
               title="Grid view"
             >
               ⊞
@@ -229,7 +231,8 @@ export function BookmarkList() {
           <button
             onClick={handleCheckLinks}
             disabled={checkingLinks}
-            className="px-3 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all disabled:opacity-50"
+            className="px-3 py-2 rounded-lg transition-all disabled:opacity-50"
+            style={{ color: 'var(--color-text-secondary)' }}
             title="Check for broken links"
           >
             {checkingLinks ? '⏳' : '🔍'}
@@ -237,19 +240,21 @@ export function BookmarkList() {
 
           {/* Export */}
           <div className="relative group">
-            <button className="px-3 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 rounded-lg transition-all">
+            <button className="px-3 py-2 rounded-lg transition-all" style={{ color: 'var(--color-text-secondary)' }}>
               📤
             </button>
-            <div className="absolute right-0 top-full mt-1 bg-zinc-900 border border-zinc-700/50 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+            <div className="absolute right-0 top-full mt-1 border rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10" style={{ backgroundColor: 'var(--color-bg-primary)', borderColor: 'var(--color-border)' }}>
               <button
                 onClick={() => handleExport('json')}
-                className="block w-full px-4 py-2 text-left text-sm text-zinc-200 hover:bg-zinc-800 rounded-t-xl"
+                className="block w-full px-4 py-2 text-left text-sm rounded-t-xl"
+                style={{ color: 'var(--color-text-primary)' }}
               >
                 Export as JSON
               </button>
               <button
                 onClick={() => handleExport('html')}
-                className="block w-full px-4 py-2 text-left text-sm text-zinc-200 hover:bg-zinc-800 rounded-b-xl"
+                className="block w-full px-4 py-2 text-left text-sm rounded-b-xl"
+                style={{ color: 'var(--color-text-primary)' }}
               >
                 Export as HTML
               </button>
@@ -259,7 +264,8 @@ export function BookmarkList() {
           {/* Add Bookmark */}
           <button
             onClick={() => setShowForm(true)}
-            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-xl hover:from-purple-500 hover:to-violet-500 transition-all flex items-center gap-2 shadow-lg shadow-purple-500/20"
+            className="px-4 py-2 text-white rounded-xl transition-all flex items-center gap-2"
+            style={{ backgroundColor: 'var(--color-accent)' }}
           >
             <span>+</span>
             <span>Add Bookmark</span>
@@ -286,9 +292,9 @@ export function BookmarkList() {
 
       {/* Bookmark List/Grid */}
       {bookmarks.length === 0 ? (
-        <div className="text-center py-12 bg-zinc-900/50 rounded-xl border border-zinc-700/50">
+        <div className="text-center py-12 rounded-xl border" style={{ backgroundColor: 'var(--color-bg-primary)', borderColor: 'var(--color-border)' }}>
           <div className="text-4xl mb-4">🔗</div>
-          <p className="text-zinc-400">
+          <p style={{ color: 'var(--color-text-secondary)' }}>
             No bookmarks yet. Save your first link!
           </p>
         </div>

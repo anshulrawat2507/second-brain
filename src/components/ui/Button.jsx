@@ -11,21 +11,37 @@ const Button = forwardRef(function Button(
     children, 
     className, 
     disabled,
+    style,
     ...props 
   },
   ref
 ) {
-  const variants = {
-    primary: 'bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white shadow-lg shadow-purple-500/25',
-    secondary: 'bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border border-zinc-700',
-    ghost: 'bg-transparent hover:bg-zinc-800 text-zinc-300 hover:text-white',
-    danger: 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/25',
-  };
-
   const sizes = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-sm',
     lg: 'px-6 py-3 text-base',
+  };
+
+  const variantStyles = {
+    primary: {
+      background: 'var(--color-accent)',
+      color: '#fff',
+      boxShadow: '0 4px 12px color-mix(in srgb, var(--color-accent) 25%, transparent)',
+    },
+    secondary: {
+      backgroundColor: 'var(--color-bg-elevated)',
+      color: 'var(--color-text-primary)',
+      border: '1px solid var(--color-border)',
+    },
+    ghost: {
+      backgroundColor: 'transparent',
+      color: 'var(--color-text-secondary)',
+    },
+    danger: {
+      backgroundColor: 'var(--color-error, #dc2626)',
+      color: '#fff',
+      boxShadow: '0 4px 12px color-mix(in srgb, var(--color-error, #dc2626) 25%, transparent)',
+    },
   };
 
   return (
@@ -34,11 +50,10 @@ const Button = forwardRef(function Button(
       className={cn(
         'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200',
         'disabled:opacity-50 disabled:cursor-not-allowed',
-        'focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:ring-offset-2 focus:ring-offset-zinc-900',
-        variants[variant],
         sizes[size],
         className
       )}
+      style={{ ...variantStyles[variant], ...style }}
       disabled={disabled || isLoading}
       {...props}
     >
